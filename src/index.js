@@ -7,6 +7,8 @@ import Jogo from './Pages/Jogo';
 import Cadastro from './Pages/Cadastro';
 import Login from './Pages/Login';
 import Admin from './Pages/Admin';
+import CadastroTorneio from './Pages/CadastroTorneio';
+import CadastroJogadores from './Pages/CadastroJogadores';
 
 ReactDOM.render(
   <Provider>
@@ -15,7 +17,9 @@ ReactDOM.render(
       <Route component={Jogo} path='/jogo' />
       <Route component={Cadastro} path='/cadastro' />
       <Route component={Login} path='/login' />
-      <Route component={Admin} path='/Admin' />
+      <Route component={Admin} path='/admin' />
+      <Route component={CadastroTorneio} path='/cadastrotorneio' />
+      <Route component={CadastroJogadores} path='/cadastrojogadores' />
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')
