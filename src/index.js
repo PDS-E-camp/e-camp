@@ -9,6 +9,7 @@ import Login from './Pages/Login';
 import Admin from './Pages/Admin';
 import CadastroTorneio from './Pages/CadastroTorneio';
 import CadastroJogadores from './Pages/CadastroJogadores';
+import Perfil from './Pages/Perfil';
 
 ReactDOM.render(
   <Provider>
@@ -20,6 +21,7 @@ ReactDOM.render(
       <Route component={Admin} path='/admin' />
       <Route component={CadastroTorneio} path='/cadastrotorneio' />
       <Route component={CadastroJogadores} path='/cadastrojogadores' />
+      <Route component={Perfil} path='/perfil' />
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')
