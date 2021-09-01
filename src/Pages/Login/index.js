@@ -11,6 +11,7 @@ import capaFf from '../../assets/images/capa-ff.png';
 import capaLol from '../../assets/images/capa-lol.png';
 import capaFifa from '../../assets/images/capa-fifa.png';
 import Footer from '../../Components/Footer';
+import Axios from 'axios'
 
 function Cadastro() {
   const [form, setForm] = useState({
@@ -20,21 +21,19 @@ function Cadastro() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (
-      window.localStorage.getItem('emailCadastro') === form.email &&
-      window.localStorage.getItem('senhaCadastro') === form.senha
-    ) {
-      window.localStorage.setItem('emailLogin', form.email);
-      window.localStorage.setItem('senhaLogin', form.senha);
-      window.localStorage.setItem(
-        'nomeLogin',
-        window.localStorage.getItem('nomeCadastro')
-      );
-      alert('Login realizado com sucesso!');
-      window.location.href = '/';
-    } else {
-      alert('Login incorreto!');
-    }
+    Axios.post('http://localhost:3001/login', {
+      email: form.email,
+      password: form.senha,
+    })
+      .then((response) => {
+        alert(response.data.msg);
+        console.log(response);
+      })
+      .catch((error) => {
+        alert(error);
+        console.log(error);
+      });
+    window.location.href = '/perfil';
   }
 
   function handleChange({ target }) {
