@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ContainerCadastro = styled.div`
   img {
@@ -16,7 +16,7 @@ export const ContainerCadastro = styled.div`
   }
   .modal {
     width: 1024px;
-    height: 600px;
+    padding: 30px;
     background: ${({ theme }) => theme.black};
     border-radius: 15px;
     display: flex;
@@ -25,19 +25,24 @@ export const ContainerCadastro = styled.div`
     justify-content: center;
     h1 {
       font-size: 48px;
-      font-family: 'Press Start 2P', cursive;
+      font-family: "Press Start 2P", cursive;
       color: ${({ theme }) => theme.primary};
       margin-bottom: 50px;
     }
     form {
       display: flex;
       flex-direction: column;
-      input {
+      input,
+      select {
         width: 550px;
         height: 40px;
         border: none;
         margin-bottom: 30px !important;
         padding: 15px;
+      }
+      select {
+        padding: 0 15px;
+        background: white;
       }
       button {
         width: 150px;
@@ -52,7 +57,7 @@ export const ContainerCadastro = styled.div`
         font-weight: bold;
         font-size: 18px;
         text-align: center;
-        font-family: 'Oswald', sans-serif;
+        font-family: "Oswald", sans-serif;
         transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         :hover {
           transform: scale(1.1);

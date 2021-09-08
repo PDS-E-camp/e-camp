@@ -1,39 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { ContainerCadastro } from './styles';
+import { ContainerCadastro } from "./styles";
 
 //componentes
-import Navbar from '../../Components/Navbar';
-import ff from '../../assets/images/ff.png';
-import FIFA from '../../assets/images/fifa.png';
-import lol from '../../assets/images/lol.png';
-import capaFf from '../../assets/images/capa-ff.png';
-import capaLol from '../../assets/images/capa-lol.png';
-import capaFifa from '../../assets/images/capa-fifa.png';
-import Footer from '../../Components/Footer';
-import Axios from 'axios'
+import Navbar from "../../Components/Navbar";
+import ff from "../../assets/images/ff.png";
+import FIFA from "../../assets/images/fifa.png";
+import lol from "../../assets/images/lol.png";
+import capaFf from "../../assets/images/capa-ff.png";
+import capaLol from "../../assets/images/capa-lol.png";
+import capaFifa from "../../assets/images/capa-fifa.png";
+import Footer from "../../Components/Footer";
+import Axios from "axios";
 
-function Cadastro() {
+function Login() {
   const [form, setForm] = useState({
-    email: '',
-    senha: '',
+    email: "",
+    senha: "",
   });
 
   function handleSubmit(event) {
     event.preventDefault();
-    Axios.post('http://localhost:3001/login', {
+    Axios.post("http://localhost:3001/login", {
       email: form.email,
-      password: form.senha,
+      senha: form.senha,
     })
       .then((response) => {
-        alert(response.data.msg);
         console.log(response);
       })
       .catch((error) => {
-        alert(error);
         console.log(error);
       });
-    window.location.href = '/perfil';
+    // window.location.href = '/perfil';
   }
 
   function handleChange({ target }) {
@@ -71,4 +69,4 @@ function Cadastro() {
   );
 }
 
-export default Cadastro;
+export default Login;
