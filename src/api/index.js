@@ -8,7 +8,7 @@ const saltRounds = 10;
 const db = mysql.createPool({
   host: "localhost",
   user: "root",
-  senha: "kaio12",
+  password: "kaio12",
   database: "ecamp_bd",
 });
 
