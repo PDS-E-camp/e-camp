@@ -59,6 +59,7 @@ function Perfil() {
                 <h1>{perfil.username}</h1>
                 <p>{perfil.nome}</p>
                 <p>{dataNasc.getDate()}/{dataNasc.getMonth() + 1}/{dataNasc.getFullYear()}</p>
+                
               </div>
               <div>
                 <p>
