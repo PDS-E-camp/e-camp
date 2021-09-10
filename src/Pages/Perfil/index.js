@@ -26,7 +26,6 @@ function Perfil() {
       .then((response) => {
           setArrayGerencio(response.data[1])
           setArrayParticipo(response.data[1])
-          console.log(response.data[1])
           setPerfil(response.data[0][0])
           const date = new Date(response.data[0][0].data_nasc)
           setDataNasc(date)
@@ -36,6 +35,11 @@ function Perfil() {
     }
     init()
   },[])
+
+  function handleClick(id) {
+    localStorage.setItem('id_torneio', id);
+    window.location.href = '/torneio';
+  }
 
 
   return (
@@ -69,7 +73,7 @@ function Perfil() {
             <div className='section-card'>
               {arrayGerencio.map((item, index) => {
                 return (
-                  <Card key={index} image={item.link}>
+                  <Card key={item.id_torneio} image={item.link} onClick={() => handleClick(item.id_torneio)}>
                     <div className='cover' />
                     <p>{item.nome_torneio}</p>
                   </Card>
@@ -84,7 +88,7 @@ function Perfil() {
             <div className='section-card'>
               {arrayParticipo.map((item, index) => {
                 return (
-                  <Card key={index} image={item.link}>
+                  <Card key={item.id_torneio} image={item.link} onClick={() => handleClick(item.id_torneio)}>
                     <div className='cover' />
                     <p>{item.nome_torneio}</p>
                   </Card>

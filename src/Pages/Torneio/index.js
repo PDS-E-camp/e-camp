@@ -11,103 +11,34 @@ import capaFf from '../../assets/images/capa-ff.png';
 import capaLol from '../../assets/images/capa-lol.png';
 import capaFifa from '../../assets/images/capa-fifa.png';
 import Footer from '../../Components/Footer';
+import Axios from 'axios';
 
 function Torneio() {
-  const [jogo, setJogo] = useState();
-  const id = window.localStorage.getItem('jogoID');
   const name = window.localStorage.getItem('nomeLogin');
   const [textArea, setTextArea] = useState('');
+  const [comentarios, setComentarios] = useState([]);
 
-  const [comentarios, setComentarios] = useState([
-    {
-      name: 'Kaio',
-      comentario: 'Jogo ta top!',
-    },
-    {
-      name: 'Rodolfo',
-      comentario: 'Vamoos ganharrr!!!',
-    },
-  ]);
+  const [torneioAtual, setTorneioAtual] = useState({});
 
-  const torneios = [
-    {
-      id: 1,
-      nome: 'Copa LOL',
-      premio: '5 mil reais',
-      dataI: new Date('May 17, 2021 03:24:00'),
-      dataF: new Date(),
-      thumb: lol,
-      capa: capaLol,
-      rodada: 10,
-    },
-    {
-      id: 2,
-      nome: 'Copa FF',
-      premio: '1 mil reais',
-      dataI: new Date('May 17, 2021 03:24:00'),
-      dataF: new Date(),
-      thumb: ff,
-      capa: capaFf,
-      rodada: 8,
-    },
-    {
-      id: 3,
-      nome: 'Copa FIFA',
-      premio: '2 mil reais',
-      dataI: new Date('May 17, 2021 03:24:00'),
-      dataF: new Date(),
-      thumb: FIFA,
-      capa: capaFifa,
-      rodada: 6,
-    },
-    {
-      id: 4,
-      nome: 'Copa LOLzin',
-      premio: '2 mil reais',
-      dataI: new Date('May 17, 2021 03:24:00'),
-      dataF: new Date(),
-      thumb: lol,
-      capa: capaLol,
-      rodada: 7,
-    },
-    {
-      id: 5,
-      nome: 'Copa FFzin',
-      premio: '500 reais',
-      dataI: new Date('May 17, 2021 03:24:00'),
-      dataF: new Date(),
-      thumb: ff,
-      capa: capaFf,
-      rodada: 2,
-    },
-    {
-      id: 6,
-      nome: 'Copa FIFinha',
-      premio: '3 mil reais',
-      dataI: new Date('May 17, 2021 03:24:00'),
-      dataF: new Date(),
-      thumb: FIFA,
-      capa: capaFifa,
-      rodada: 1,
-    },
-    {
-      id: 7,
-      nome: 'Copa 3X',
-      premio: '2500 reais',
-      dataI: new Date('May 17, 2021 03:24:00'),
-      dataF: new Date(),
-      thumb: ff,
-      capa: capaFf,
-      rodada: 4,
-    },
-  ];
-
-  useEffect(() => {
-    const jogoAtual = torneios.filter((item) => {
-      return item.id == id && item;
-    });
-    setJogo(jogoAtual[0]);
-  }, []);
+  useEffect(()=>{
+    const id_usuario = window.localStorage.getItem('id_usuario')
+    const id_torneio = window.localStorage.getItem('id_torneio')
+    function init() {
+      Axios.get(`http://localhost:3001/perfil/${id_usuario}`
+        )
+      .then((response) => {
+          response.data[1].map((item)=>{
+            if(item.id_torneio.toString() === id_torneio){
+              console.log(item)
+              setTorneioAtual(item)
+              
+            }
+          })
+        }
+      )
+    }
+    init()
+  },[])
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -117,12 +48,12 @@ function Torneio() {
   }
 
   return (
-    <ContainerJogo capa={jogo && jogo.capa}>
+    <ContainerJogo capa={torneioAtual.link}>
       <Navbar />
       <section className='content-jogo'>
         <div className='capa' />
         <div className='content'>
-          <p className='rodada'>Rodada {jogo && jogo.rodada}</p>
+          <p className='rodada'>{torneioAtual.nome_torneio}</p>
           <form onSubmit={handleSubmit}>
             <label>Comentários</label>
             <textarea
