@@ -146,6 +146,20 @@ app.post("/torneio",(req,res) => {
       res.send({ msg: "Comentário feito com sucesso!", result });
     }
   );
+  
+  db.query("SELECT DISTINCT c.username, ct.comentario FROM cadastro c, comentarios_torneio ct, torneio t " + 
+  " WHERE t.id_torneio = ? AND ct.fk_id_torneio = ? AND c.id_usuario = ct.fk_id_usuario;",
+  [fk_id_torneio, fk_id_torneio],
+    (error, result2) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({ msg: "Comentário realizado com sucesso!", result2});
+    }
+  );
+
+  
 
 });
 
