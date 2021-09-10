@@ -131,7 +131,23 @@ app.post("/cadastropartida",(req,res) => {
 
 });
 
+app.post("/torneio",(req,res) => {
+  const comentario = req.body.comentario;
+  const fk_id_usuario = req.body.id_usuario
+  const fk_id_torneio = req.body.fk_id_torneio
 
+  db.query("INSERT INTO comentarios_torneio (comentario, fk_id_usuario, fk_id_torneio) VALUES (?,?,?)",
+  [comentario, fk_id_usuario,fk_id_torneio],
+    (error, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({ msg: "Comentário feito com sucesso!", result });
+    }
+  );
+
+});
 
 
 
