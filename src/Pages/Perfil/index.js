@@ -12,6 +12,9 @@ import Axios from 'axios';
 
 function Perfil() {
   
+  const [perfil, setPerfil] = useState('')
+  const [dataNasc, setDataNasc] = useState(new Date())
+
   const arrayGerencio = [
     { title: 'lol', image: lol },
     { title: 'fifa', image: FIFA },
@@ -30,12 +33,13 @@ function Perfil() {
   useEffect(()=>{
     const id_usuario = window.localStorage.getItem('id_usuario')
     function init() {
-      Axios.get(`http://localhost:3001/perfil/:id_usuario`,{
-          id_usuario
-      }
+      Axios.get(`http://localhost:3001/perfil/${id_usuario}`
         )
       .then((response) => {
-          console.log(response)
+          setPerfil(response.data[0][0])
+          const date = new Date(response.data[0][0].data_nasc)
+          setDataNasc(date)
+          
         }
       )
     }
@@ -52,8 +56,9 @@ function Perfil() {
             <div className='foto-perfil' />
             <div className='informacoes'>
               <div>
-                <h1>Marivaldo Fratura Exposta</h1>
-                <p>marivaldoFE@gmail.com</p>
+                <h1>{perfil.username}</h1>
+                <p>{perfil.nome}</p>
+                <p>{dataNasc.getDate()}/{dataNasc.getMonth() + 1}/{dataNasc.getFullYear()}</p>
               </div>
               <div>
                 <p>
