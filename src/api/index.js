@@ -139,7 +139,7 @@ app.post("/torneio",(req,res) => {
 
   db.query("INSERT INTO comentarios_torneio (comentario, fk_id_usuario, fk_id_torneio) VALUES (?,?,?)",
   [comentario, fk_id_usuario,fk_id_torneio],
-    (error, result) => {
+    (err, result) => {
       if (err) {
         res.send(err);
       }
@@ -148,25 +148,25 @@ app.post("/torneio",(req,res) => {
     }
   );
   
-  db.query("SELECT DISTINCT c.username, ct.comentario FROM cadastro c, comentarios_torneio ct, torneio t " + 
-  " WHERE t.id_torneio = ? AND ct.fk_id_torneio = ? AND c.id_usuario = ct.fk_id_usuario;",
-  [fk_id_torneio, fk_id_torneio],
-    (error, result2) => {
-      if (err) {
-        res.send(err);
-      }
-
-      res.send({ msg: "Comentário realizado com sucesso!", result2});
-    }
-  );
 });
 
 
 
+app.get("/torneio/:id_torneio",(req,res) => {
+  const fk_id_torneio = req.params.id_torneio
 
+  db.query("SELECT DISTINCT c.username, ct.comentario FROM cadastro c, comentarios_torneio ct, torneio t " + 
+  " WHERE t.id_torneio = ? AND ct.fk_id_torneio = ? AND c.id_usuario = ct.fk_id_usuario;",
+  [fk_id_torneio, fk_id_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
 
-
-
+      res.send({result});
+    }
+  );
+});
 
 
 

@@ -9,11 +9,23 @@ import Footer from '../../Components/Footer';
 import Axios from 'axios';
 
 function Torneio() {
-  const name = window.localStorage.getItem('nomeLogin');
+  const [name, setName] = useState('');
   const [textArea, setTextArea] = useState('');
   const [comentarios, setComentarios] = useState([]);
 
   const [torneioAtual, setTorneioAtual] = useState({});
+
+  function getComentarios(){
+    const id_torneio = window.localStorage.getItem('id_torneio')
+    Axios.get(`http://localhost:3001/torneio/${id_torneio}`
+      )
+    .then((response) => {
+      console.log(response)
+      setComentarios(response.data.result)
+      
+      }
+    )
+  }
 
   useEffect(()=>{
     const id_usuario = window.localStorage.getItem('id_usuario')
@@ -22,9 +34,9 @@ function Torneio() {
       Axios.get(`http://localhost:3001/perfil/${id_usuario}`
         )
       .then((response) => {
+        setName(response.data[0][0].username)
           response.data[1].map((item)=>{
             if(item.id_torneio.toString() === id_torneio){
-              console.log(item)
               setTorneioAtual(item)
               
             }
@@ -33,13 +45,28 @@ function Torneio() {
       )
     }
     init()
+    getComentarios()
   },[])
+
+  
 
   function handleSubmit(event) {
     event.preventDefault();
-    const comentUpdate = [...comentarios, { name, comentario: textArea }];
-    setComentarios(comentUpdate);
-    setTextArea('');
+    const id_usuario = window.localStorage.getItem('id_usuario')
+    const id_torneio = window.localStorage.getItem('id_torneio')
+    if(!textArea){
+      alert('Preencha o comentário corretamente.');
+    }else{
+      Axios.post("http://localhost:3001/torneio", {
+        comentario: textArea,
+        id_usuario: id_usuario,
+        fk_id_torneio: id_torneio
+      }).then((response) => {
+          getComentarios()
+          setTextArea('');
+        }
+      )
+    }
   }
 
   return (
@@ -64,7 +91,7 @@ function Torneio() {
               .map((item) => {
                 return (
                   <>
-                    <p className='nome'>{item.name}</p>
+                    <p className='nome'>{item.username}</p>
                     <p className='texto'>{item.comentario}</p>
                   </>
                 );
