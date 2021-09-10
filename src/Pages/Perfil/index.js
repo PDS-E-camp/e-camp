@@ -58,10 +58,10 @@ function Perfil() {
               </div>
               <div>
                 <p>
-                  Gerencia <span>4</span> Torneios
+                  Gerencia <span>{arrayGerencio.length}</span> Torneios
                 </p>
                 <p>
-                  Participa de <span>6</span> Torneios
+                  Participa de <span>{arrayParticipo.length}</span> Torneios
                 </p>
               </div>
             </div>

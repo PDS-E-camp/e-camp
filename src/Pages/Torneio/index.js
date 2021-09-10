@@ -4,12 +4,7 @@ import { ContainerJogo, Thumb } from './styles';
 
 //componentes
 import Navbar from '../../Components/Navbar';
-import ff from '../../assets/images/ff.png';
-import FIFA from '../../assets/images/fifa.png';
-import lol from '../../assets/images/lol.png';
-import capaFf from '../../assets/images/capa-ff.png';
-import capaLol from '../../assets/images/capa-lol.png';
-import capaFifa from '../../assets/images/capa-fifa.png';
+
 import Footer from '../../Components/Footer';
 import Axios from 'axios';
 
