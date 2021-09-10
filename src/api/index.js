@@ -117,10 +117,11 @@ app.post("/cadastropartida",(req,res) => {
   const times = req.body.times;
   const hora = req.body.hora;
   const dia = req.body.dia;
+  const fk_id_torneio = req.body.fk_id_torneio;
 
   db.query("INSERT INTO partida(times, hora, dia,fk_id_torneio) VALUES (?,?,?,?)",
     [times, hora, dia,fk_id_torneio],
-    (error, response) => {
+    (error, result) => {
       if (err) {
         res.send(err);
       }
@@ -158,9 +159,6 @@ app.post("/torneio",(req,res) => {
       res.send({ msg: "Comentário realizado com sucesso!", result2});
     }
   );
-
-  
-
 });
 
 
