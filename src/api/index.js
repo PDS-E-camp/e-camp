@@ -110,6 +110,16 @@ app.post("/cadastrotorneio",(req,res) => {
       res.send({ msg: "Torneio cadastrado com sucesso!", result });
     }
   );
+  db.query("SELECT t.id_torneio FROM torneio t WHERE t.nome_torneio = ? AND t.fk_id_usuario = ?",
+    [nome_torneio, fk_id_usuario],
+    (err, result2) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send(result2);
+    }
+  );
 
 });
 
