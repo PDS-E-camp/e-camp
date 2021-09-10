@@ -12,7 +12,7 @@ import capaLol from '../../assets/images/capa-lol.png';
 import capaFifa from '../../assets/images/capa-fifa.png';
 import Footer from '../../Components/Footer';
 
-function Jogo() {
+function Torneio() {
   const [jogo, setJogo] = useState();
   const id = window.localStorage.getItem('jogoID');
   const name = window.localStorage.getItem('nomeLogin');
@@ -152,4 +152,4 @@ function Jogo() {
   );
 }
 
-export default Jogo;
+export default Torneio;

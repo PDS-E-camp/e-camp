@@ -44,7 +44,7 @@ export const ContainerPerfil = styled.div`
     }
   }
   .foto-perfil {
-    background: url('https://http2.mlstatic.com/D_NQ_NP_614041-MLB27185740295_042018-O.jpg')
+    background: url('https://iep.lisboa.ucp.pt/sites/default/files/assets/images/avatar-iep.png')
       no-repeat;
     margin-right: 1rem;
     background-position: center;

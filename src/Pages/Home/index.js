@@ -88,8 +88,8 @@ function Home() {
   ];
 
   function handleClick(id) {
-    localStorage.setItem('jogoID', id);
-    window.location.href = '/jogo';
+    localStorage.setItem('torneioID', id);
+    // window.location.href = '/torneio';
   }
 
   return (
@@ -126,7 +126,7 @@ function Home() {
           {torneios.reverse().map((item) => {
             return (
               <Thumb key={item.id} item={item.thumb}>
-                <a href='/jogo'>
+                <a>
                   <div className='thumb-content'>
                     <h2>{item.nome}</h2>
                     <h1>{item.premio}</h1>

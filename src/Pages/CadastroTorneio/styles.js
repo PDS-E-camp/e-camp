@@ -32,6 +32,25 @@ export const ContainerCadastro = styled.div`
       background-position: center;
       margin-bottom: 30px;
     }
+    .finalizar {
+        width: 150px;
+        height: 40px;
+        background: ${({ theme }) => theme.primary};
+        cursor: pointer;
+        transform: scale(1.05);
+        color: ${({ theme }) => theme.white};
+        border-radius: 5px;
+        align-self: center;
+        border: none;
+        font-weight: bold;
+        font-size: 18px;
+        text-align: center;
+        font-family: 'Oswald', sans-serif;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        :hover {
+          transform: scale(1.1);
+        }
+      }
     .capa-default {
       background-color: ${({ theme }) => theme.primary};
       position: relative;

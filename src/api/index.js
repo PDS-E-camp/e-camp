@@ -97,16 +97,17 @@ app.get("/perfil/:id_usuario", (req,res) => {
 app.post("/cadastrotorneio",(req,res) => {
   const link = req.body.link;
   const nome_torneio = req.body.nome_torneio;
-  const numero_times = req.body.numero_torneio;
+  const numero_times = req.body.numero_times;
+  const fk_id_usuario = req.body.id_usuario
 
   db.query("INSERT INTO torneio(link, nome_torneio,numero_times,fk_id_usuario) VALUES (?,?,?,?)",
     [link, nome_torneio,numero_times,fk_id_usuario],
-    (error, response) => {
+    (err, result) => {
       if (err) {
         res.send(err);
       }
 
-      res.send({ msg: "Torneio cadastrado com sucesso!" });
+      res.send({ msg: "Torneio cadastrado com sucesso!", result });
     }
   );
 
@@ -125,7 +126,7 @@ app.post("/cadastropartida",(req,res) => {
         res.send(err);
       }
 
-      res.send({ msg: "Partida cadastrada com sucesso!" });
+      res.send({ msg: "Partida cadastrada com sucesso!", result });
     }
   );
 

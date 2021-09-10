@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { ContainerCadastro } from './styles';
 import { GrNext } from 'react-icons/gr';
-
+import Axios from 'axios';
 //componentes
 import Navbar from '../../Components/Navbar';
 import Footer from '../../Components/Footer';
@@ -12,15 +12,23 @@ function Cadastro() {
     imagem: '',
     nome: '',
     numerodetimes: '',
-    numerodejogadores: '',
-    tipodetorneio: '',
-    timesporpartida: '',
   });
 
   function handleSubmit(event) {
     event.preventDefault();
-    localStorage.setItem('torneio', JSON.stringify(form));
-    window.location.href = '/cadastrojogadores';
+    const id_usuario = window.localStorage.getItem('id_usuario')
+    if (!form.nome || !form.imagem || !form.numerodetimes){
+      alert('Há campos não preenchidos, preencha o cadastro corretamente.');
+    }else{
+    Axios.post("http://localhost:3001/cadastrotorneio", {
+      nome_torneio: form.nome,
+      numero_times: form.numerodetimes,
+      link: form.imagem,
+      id_usuario: id_usuario,  
+    }).then((response) => {
+      alert(response.data.msg);
+      window.location.href = '/perfil'
+    })}
   }
 
   function handleChange({ target }) {
@@ -57,32 +65,11 @@ function Cadastro() {
               value={form.numerodetimes}
               onChange={handleChange}
               placeholder='Número de times'
-            />
-            <input
-              type='number'
-              id='numerodejogadores'
-              value={form.numerodejogadores}
-              onChange={handleChange}
-              placeholder='Número de jogadores'
-            />
-            <select
-              id='tipodetorneio'
-              value={form.tipodetorneio}
-              onChange={handleChange}
-            >
-              <option value='pontuacao'>Pontuação</option>
-              <option value='eliminatoria'>Eliminatória</option>
-            </select>
-            <input
-              type='number'
-              id='timesporpartida'
-              value={form.timesporpartida}
-              onChange={handleChange}
-              placeholder='timesporpartida'
-            />
-            <button onClick={handleSubmit}>
+            />          
+            {/* <button onClick={handleSubmit}>
               <GrNext />
-            </button>
+            </button> */}
+            <button className='finalizar' onClick={handleSubmit}>FINALIZAR</button>
           </form>
         </div>
       </section>

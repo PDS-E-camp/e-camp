@@ -15,20 +15,8 @@ function Perfil() {
   const [perfil, setPerfil] = useState('')
   const [dataNasc, setDataNasc] = useState(new Date())
 
-  const arrayGerencio = [
-    { title: 'lol', image: lol },
-    { title: 'fifa', image: FIFA },
-    { title: 'freefire', image: ff },
-    { title: 'lolzin do bairro', image: lol },
-  ];
-  const arrayParticipo = [
-    { title: 'lol', image: lol },
-    { title: 'fifa', image: FIFA },
-    { title: 'freefire', image: ff },
-    { title: 'lolzin do bairro', image: lol },
-    { title: 'freefirezin', image: ff },
-    { title: 'fifa dos parças', image: FIFA },
-  ];
+  const [arrayGerencio, setArrayGerencio] = useState([])
+  const [arrayParticipo, setArrayParticipo] = useState([]);
 
   useEffect(()=>{
     const id_usuario = window.localStorage.getItem('id_usuario')
@@ -36,6 +24,9 @@ function Perfil() {
       Axios.get(`http://localhost:3001/perfil/${id_usuario}`
         )
       .then((response) => {
+          setArrayGerencio(response.data[1])
+          setArrayParticipo(response.data[1])
+          console.log(response.data[1])
           setPerfil(response.data[0][0])
           const date = new Date(response.data[0][0].data_nasc)
           setDataNasc(date)
@@ -78,9 +69,9 @@ function Perfil() {
             <div className='section-card'>
               {arrayGerencio.map((item, index) => {
                 return (
-                  <Card key={index} image={item.image}>
+                  <Card key={index} image={item.link}>
                     <div className='cover' />
-                    <p>{item.title}</p>
+                    <p>{item.nome_torneio}</p>
                   </Card>
                 );
               })}
@@ -93,9 +84,9 @@ function Perfil() {
             <div className='section-card'>
               {arrayParticipo.map((item, index) => {
                 return (
-                  <Card key={index} image={item.image}>
+                  <Card key={index} image={item.link}>
                     <div className='cover' />
-                    <p>{item.title}</p>
+                    <p>{item.nome_torneio}</p>
                   </Card>
                 );
               })}
