@@ -38,10 +38,16 @@ export const ContainerNavbar = styled.div`
       height: 100%;
       font-family: 'Oswald', sans-serif;
       color: ${({ theme }) => theme.white};
+      :hover{
+        color: ${({ theme }) => theme.primary};
+      }
       cursor: pointer;
     }
     .cadastro {
       background: ${({ theme }) => theme.primary} !important;
+      a:hover{
+        color: ${({ theme }) => theme.black};
+      }
     }
   }
 `;

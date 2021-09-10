@@ -13,6 +13,7 @@ export const ContainerCadastro = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 120px 0 !important;
+    min-height: calc(100vh - 90px);
   }
   .modal {
     width: 1024px;

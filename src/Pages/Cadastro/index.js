@@ -4,12 +4,6 @@ import { ContainerCadastro } from "./styles";
 
 //componentes
 import Navbar from "../../Components/Navbar";
-import ff from "../../assets/images/ff.png";
-import FIFA from "../../assets/images/fifa.png";
-import lol from "../../assets/images/lol.png";
-import capaFf from "../../assets/images/capa-ff.png";
-import capaLol from "../../assets/images/capa-lol.png";
-import capaFifa from "../../assets/images/capa-fifa.png";
 import Footer from "../../Components/Footer";
 import Axios from "axios";
 
@@ -19,7 +13,7 @@ function Cadastro() {
     username: "",
     email: "",
     data_nasc: "",
-    sexo: "",
+    sexo: "Masculino",
     estado: "",
     municipio: "",
     pais: "",
@@ -28,6 +22,10 @@ function Cadastro() {
 
   function handleSubmit(event) {
     event.preventDefault();
+    if (!form.nome || !form.username || !form.email || !form.data_nasc || !form.sexo || !form.estado || !form.municipio || !form.pais || !form.senha ){
+      alert('Há campos não preenchidos, preencha o cadastro corretamente.');
+    }else{
+    
     Axios.post("http://localhost:3001/cadastro", {
       nome: form.nome,
       username: form.username,
@@ -40,7 +38,8 @@ function Cadastro() {
       senha: form.senha,
     }).then((response) => {
       alert(response.data.msg);
-    });
+      window.location.href = '/'
+    })}
   }
 
   function handleChange({ target }) {
@@ -78,7 +77,7 @@ function Cadastro() {
             />
             <input
               type='date'
-              id='date'
+              id='data_nasc'
               value={form.data_nasc}
               onChange={handleChange}
             />

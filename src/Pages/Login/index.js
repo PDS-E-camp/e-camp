@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
-
 import { ContainerCadastro } from "./styles";
-
 //componentes
 import Navbar from "../../Components/Navbar";
-import ff from "../../assets/images/ff.png";
-import FIFA from "../../assets/images/fifa.png";
-import lol from "../../assets/images/lol.png";
-import capaFf from "../../assets/images/capa-ff.png";
-import capaLol from "../../assets/images/capa-lol.png";
-import capaFifa from "../../assets/images/capa-fifa.png";
 import Footer from "../../Components/Footer";
 import Axios from "axios";
 
@@ -21,17 +13,22 @@ function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    Axios.post("http://localhost:3001/login", {
-      email: form.email,
-      senha: form.senha,
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // window.location.href = '/perfil';
+    if(!form.email || !form.senha){
+      alert('Há campos não preenchidos, preencha o login corretamente.');
+    }else{
+      Axios.post("http://localhost:3001/login", {
+        email: form.email,
+        senha: form.senha,
+      }).then((response) => {
+          alert(response.data.msg);
+          if(response.data.msg ===  "Usuário logado!"){
+            const id_usuario = response.data.result[0].id_usuario
+            window.localStorage.setItem('id_usuario', id_usuario)
+            window.location.href = '/perfil';
+          }
+        }
+      )
+    }
   }
 
   function handleChange({ target }) {
@@ -60,7 +57,7 @@ function Login() {
               onChange={handleChange}
               placeholder='senha'
             />
-            <button>CADASTRAR</button>
+            <button>ENTRAR</button>
           </form>
         </div>
       </section>

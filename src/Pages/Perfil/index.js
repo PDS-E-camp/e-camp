@@ -7,12 +7,11 @@ import Navbar from '../../Components/Navbar';
 import ff from '../../assets/images/ff.png';
 import FIFA from '../../assets/images/fifa.png';
 import lol from '../../assets/images/lol.png';
-import capaFf from '../../assets/images/capa-ff.png';
-import capaLol from '../../assets/images/capa-lol.png';
-import capaFifa from '../../assets/images/capa-fifa.png';
 import Footer from '../../Components/Footer';
+import Axios from 'axios';
 
 function Perfil() {
+  
   const arrayGerencio = [
     { title: 'lol', image: lol },
     { title: 'fifa', image: FIFA },
@@ -27,6 +26,23 @@ function Perfil() {
     { title: 'freefirezin', image: ff },
     { title: 'fifa dos parças', image: FIFA },
   ];
+
+  useEffect(()=>{
+    const id_usuario = window.localStorage.getItem('id_usuario')
+    function init() {
+      Axios.get(`http://localhost:3001/perfil/:id_usuario`,{
+          id_usuario
+      }
+        )
+      .then((response) => {
+          console.log(response)
+        }
+      )
+    }
+    init()
+  },[])
+
+
   return (
     <ContainerPerfil>
       <Navbar />
@@ -54,9 +70,9 @@ function Perfil() {
           <div className='gerencio'>
             <h1>Camps que gerencio</h1>
             <div className='section-card'>
-              {arrayGerencio.map((item) => {
+              {arrayGerencio.map((item, index) => {
                 return (
-                  <Card image={item.image}>
+                  <Card key={index} image={item.image}>
                     <div className='cover' />
                     <p>{item.title}</p>
                   </Card>
@@ -69,9 +85,9 @@ function Perfil() {
           <div className='gerencio'>
             <h1>Camps que participo</h1>
             <div className='section-card'>
-              {arrayParticipo.map((item) => {
+              {arrayParticipo.map((item, index) => {
                 return (
-                  <Card image={item.image}>
+                  <Card key={index} image={item.image}>
                     <div className='cover' />
                     <p>{item.title}</p>
                   </Card>

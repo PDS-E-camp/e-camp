@@ -8,7 +8,7 @@ const saltRounds = 10;
 const db = mysql.createPool({
   host: "localhost",
   user: "root",
-  password: "kaio12",
+  password: "123456",
   database: "ecamp_bd",
   multipleStatements: true
 });
@@ -66,7 +66,7 @@ app.post("/login", (req, res) => {
         }
         if (response) {
         
-          res.send({ msg: "Usuário logado!" });
+          res.send({ msg: "Usuário logado!", result });
           console.log(response);
         } else {
           res.send({ msg: "Senha incorreta!" });
@@ -81,7 +81,7 @@ app.post("/login", (req, res) => {
 
 app.get("/perfil/:id_usuario", (req,res) => {
   const id_usuario = req.params.id_usuario;
-
+  console.log(id_usuario)
   db.query("SELECT c.nome, c.username, c.data_nasc FROM cadastro c WHERE c.id_usuario = ?; " + 
   "SELECT t.link, t.nome_torneio FROM cadastro c, torneio t WHERE t.fk_id_usuario = ? AND c.id_usuario = ?;" +
   "SELECT t.nome_torneio FROM cadastro c, torneio t, acompanhar_torneio a WHERE a.fk_id_usuario = ? AND c.id_usuario = ? AND a.fk_id_torneio = t.id_torneio",
