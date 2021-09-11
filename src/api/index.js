@@ -97,11 +97,11 @@ app.get("/perfil/:id_usuario", (req,res) => {
 app.post("/cadastrotorneio",(req,res) => {
   const link = req.body.link;
   const nome_torneio = req.body.nome_torneio;
-  const numero_times = req.body.numero_times;
+  const qt_etapas = req.body.qt_etapas;
   const fk_id_usuario = req.body.id_usuario
 
-  db.query("INSERT INTO torneio(link, nome_torneio,numero_times,fk_id_usuario) VALUES (?,?,?,?)",
-    [link, nome_torneio,numero_times,fk_id_usuario],
+  db.query("INSERT INTO torneio(link, nome_torneio,qt_etapas,fk_id_usuario) VALUES (?,?,?,?)",
+    [link, nome_torneio,qt_etapas,fk_id_usuario],
     (err, result) => {
       if (err) {
         res.send(err);
