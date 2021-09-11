@@ -36,7 +36,8 @@ foreign key(fk_id_torneio) references torneio(id_torneio)
 CREATE TABLE IF NOT EXISTS partida (
 id_partida int NOT NULL auto_increment primary key,
 link varchar(500),
-times varchar(200) NOT NULL, 
+time1 varchar(200) NOT NULL, 
+time2 varchar(200) NOT NULL,
 hora time NOT NULL,
 dia date NOT NULL,
 etapa int NOT NULL,
@@ -63,10 +64,6 @@ foreign key(fk_id_usuario) references cadastro(id_usuario),
 foreign key(fk_id_partida) references partida(id_partida),
 foreign key(fk_id_torneio) references torneio(id_torneio)
 );
-
-
-
-
 
 
 
