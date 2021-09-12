@@ -168,6 +168,19 @@ app.post("/torneio",(req,res) => {
     }
   );
   
+   db.query("INSERT acompanhar_torneio(fk_id_usuario, fk_id_torneio) VALUES (?,?)",
+  [fk_id_usuario,fk_id_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({ msg: "Agora você está acompanhando este torneio!", result });
+    }
+  );
+  
+  
+  
 });
 
 app.get("/torneio/:id_torneio",(req,res) => {
