@@ -21,7 +21,7 @@ app.post("/", (req,res) => {
   const nome_torneio = req.body.nome_torneio;
   const dia = req.body.dia;
 
-  db.query("SELECT * FROM torneio",(err, result) => {
+  db.query("SELECT * FROM torneio t WHERE t.encerrado IS NULL,(err, result) => {
       if (err) {
         res.send(err);
       }
@@ -29,7 +29,7 @@ app.post("/", (req,res) => {
     }
   );
 
-  db.query("SELECT t.id_torneio, t.nome_torneio FROM torneio t WHERE t.id_torneio = ? OR t.nome_torneio = ?",
+  db.query("SELECT * FROM torneio t WHERE t.id_torneio = ? OR t.nome_torneio = ?",
   [id_torneio, nome_torneio],
     (err, result) => {
       if (err) {
@@ -40,7 +40,7 @@ app.post("/", (req,res) => {
     }
   );
 
-  db.query("SELECT p.id_partida, p.id_torneio, p.time1, p.time2, p.dia, p.hora, p.etapa FROM partida p, torneio t WHERE p.dia = ?",
+  db.query("SELECT * FROM partida p WHERE p.dia = ? AND p.encerrada IS NULL ",
   [dia],
     (err, result) => {
       if (err) {
