@@ -81,10 +81,12 @@ app.post("/login", (req, res) => {
 
 app.get("/perfil/:id_usuario", (req,res) => {
   const id_usuario = req.params.id_usuario;
+  
   db.query("SELECT c.nome, c.username, c.data_nasc FROM cadastro c WHERE c.id_usuario = ?; " + 
-  "SELECT t.id_torneio, t.link, t.nome_torneio FROM cadastro c, torneio t WHERE t.fk_id_usuario = ? AND c.id_usuario = ?;" +
-  "SELECT t.nome_torneio FROM cadastro c, torneio t, acompanhar_torneio a WHERE a.fk_id_usuario = ? AND c.id_usuario = ? AND a.fk_id_torneio = t.id_torneio",
-   [id_usuario, id_usuario, id_usuario, id_usuario, id_usuario, id_usuario], (err, result) => {
+  "SELECT t.id_torneio, t.link, t.nome_torneio FROM cadastro c, torneio t t.fk_id_usuario = ? AND t.fk_id_usuario = c.id_usuario;" +
+  "SELECT t.nome_torneio FROM acompanhar_torneio a, cadastro c, torneio t WHERE a.fk_id_usuario = ? AND " + 
+           "a.fk_id_usuario = c.id_usuario AND a.fk_id_torneio = t.id_torneio",
+   [id_usuario, id_usuario, id_usuario], (err, result) => {
     if (err) {
       res.send(err);
     }
@@ -135,8 +137,8 @@ app.get("/torneio/:id_torneio",(req,res) => {
   const fk_id_torneio = req.params.id_torneio;
 
   db.query("SELECT DISTINCT c.username, ct.comentario FROM cadastro c, comentarios_torneio ct, torneio t " + 
-  " WHERE t.id_torneio = ? AND ct.fk_id_torneio = ? AND c.id_usuario = ct.fk_id_usuario",
-  [fk_id_torneio, fk_id_torneio],
+  " WHERE ct.fk_id_torneio = ? AND c.id_usuario = ct.fk_id_usuario AND ct.fk_id_torneio = t.id_torneio",
+  [fk_id_torneio],
     (err, result) => {
       if (err) {
         res.send(err);
@@ -193,9 +195,9 @@ app.get("/partida/:id_partida",(req,res) => {
   const fk_id_partida = req.params.id_partida;
   const fk_id_torneio = req.body.fk_id_torneio;
 
-  db.query("SELECT DISTINCT c.username, cp.comentario FROM cadastro c, comentarios_partida cp, torneio t, partida p " +
-  " WHERE t.id_torneio = ? AND cp.fk_id_torneio = ? AND cp.fk_id_partida = ? AND c.id_usuario = cp.fk_id_usuario",
-  [fk_id_torneio, fk_id_torneio, fk_id_partida],
+  db.query("SELECT c.username, cp.comentario FROM cadastro c, comentarios_partida cp, torneio t, partida p WHERE cp.fk_id_torneio = ? " +
+  " AND cp.fk_id_partida = ? AND c.id_usuario = cp.fk_id_usuario AND cp.fk_id_torneio = t.id_torneio AND cp.fk_id_partida = p.id_partida",
+  [fk_id_torneio, fk_id_partida],
     (err, result) => {
       if (err) {
         res.send(err);
