@@ -113,6 +113,24 @@ app.post("/cadastrotorneio",(req,res) => {
   );
 });
 
+app.post("/torneio",(req,res) => {
+  const comentario = req.body.comentario;
+  const fk_id_usuario = req.body.id_usuario
+  const fk_id_torneio = req.body.fk_id_torneio
+
+  db.query("INSERT INTO comentarios_torneio (comentario, fk_id_usuario, fk_id_torneio) VALUES (?,?,?)",
+  [comentario, fk_id_usuario,fk_id_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({ msg: "Comentário feito com sucesso!", result });
+    }
+  );
+  
+});
+
 app.get("/torneio/:id_torneio",(req,res) => {
   const fk_id_torneio = req.params.id_torneio;
 
@@ -149,6 +167,27 @@ app.post("/cadastropartida",(req,res) => {
   );
 
 });
+
+
+app.post("/partida",(req,res) => {
+  const comentario = req.body.comentario;
+  const fk_id_usuario = req.body.id_usuario
+  const fk_id_torneio = req.body.fk_id_torneio
+  const fk_id_partida = req.body.fk_id_partida
+
+  db.query("INSERT INTO comentarios_partida(comentario, fk_id_usuario, fk_id_partida, fk_id_torneio) VALUES (?,?,?,?);",
+  [comentario, fk_id_usuario,fk_id_partida,fk_id_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({ msg: "Comentário feito com sucesso!", result });
+    }
+  );
+  
+});
+
 
 app.get("/partida/:id_partida",(req,res) => {
   const fk_id_partida = req.params.id_partida;
