@@ -16,6 +16,43 @@ const db = mysql.createPool({
 app.use(express.json());
 app.use(cors());
 
+app.post("/", (req,res) => {
+  const id_torneio = req.body.id_torneio;
+  const nome_torneio = req.body.nome_torneio;
+  const dia = req.body.dia;
+
+  db.query("SELECT * FROM torneio",(err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      res.send({result});
+    }
+  );
+
+  db.query("SELECT t.id_torneio, t.nome_torneio FROM torneio t WHERE t.id_torneio = ? OR t.nome_torneio = ?",
+  [id_torneio, nome_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({result});
+    }
+  );
+
+  db.query("SELECT p.id_partida, p.id_torneio, p.time1, p.time2, p.dia, p.hora, p.etapa FROM partida p, torneio t WHERE p.dia = ?",
+  [dia],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({result});
+    }
+  );
+
+});
+
 app.post("/cadastro", (req, res) => {
   const nome = req.body.nome;
   const username = req.body.username;
