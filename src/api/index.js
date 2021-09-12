@@ -154,8 +154,10 @@ app.post("/cadastrotorneio",(req,res) => {
 
 app.post("/torneio",(req,res) => {
   const comentario = req.body.comentario;
-  const fk_id_usuario = req.body.id_usuario
-  const fk_id_torneio = req.body.fk_id_torneio
+  const fk_id_usuario = req.body.fk_id_usuario;
+  const fk_id_torneio = req.body.fk_id_torneio;
+  const resultado = req.body.resultado;
+  const encerrado = req.body.encerrado;
 
   db.query("INSERT INTO comentarios_torneio (comentario, fk_id_usuario, fk_id_torneio) VALUES (?,?,?)",
   [comentario, fk_id_usuario,fk_id_torneio],
@@ -176,6 +178,18 @@ app.post("/torneio",(req,res) => {
       }
 
       res.send({ msg: "Agora você está acompanhando este torneio!", result });
+    }
+  );
+  
+  
+  db.query("UPDATE torneio SET resultado = ?, encerrado = ? WHERE id_torneio = ?",
+  [resultado, encerrado, fk_id_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({ msg: "Torneio Encerrado!", result });
     }
   );
   
@@ -226,6 +240,8 @@ app.post("/partida",(req,res) => {
   const fk_id_usuario = req.body.id_usuario
   const fk_id_torneio = req.body.fk_id_torneio
   const fk_id_partida = req.body.fk_id_partida
+  const resultado = req.body.resultado;
+  const encerrada = req.body.encerrada;
 
   db.query("INSERT INTO comentarios_partida(comentario, fk_id_usuario, fk_id_partida, fk_id_torneio) VALUES (?,?,?,?);",
   [comentario, fk_id_usuario,fk_id_partida,fk_id_torneio],
@@ -237,6 +253,20 @@ app.post("/partida",(req,res) => {
       res.send({ msg: "Comentário feito com sucesso!", result });
     }
   );
+  
+   db.query("UPDATE partida SET resultado = ?, encerrada = ? WHERE id_partida = ? AND fk_id_torneio = ?",
+  [resultado, encerrada, fk_id_partida, fk_id_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({ msg: "Torneio Partida!", result });
+    }
+  );
+  
+  
+  
   
 });
 
