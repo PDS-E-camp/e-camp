@@ -98,10 +98,11 @@ app.post("/cadastrotorneio",(req,res) => {
   const link = req.body.link;
   const nome_torneio = req.body.nome_torneio;
   const qt_etapas = req.body.qt_etapas;
-  const fk_id_usuario = req.body.id_usuario
+  const descricao = req.body.descricao;
+  const fk_id_usuario = req.body.id_usuario;
 
-  db.query("INSERT INTO torneio(link, nome_torneio,qt_etapas,fk_id_usuario) VALUES (?,?,?,?)",
-    [link, nome_torneio,qt_etapas,fk_id_usuario],
+  db.query("INSERT INTO torneio(link, nome_torneio,qt_etapas, descricao, fk_id_usuario) VALUES (?,?,?,?,?)",
+    [link, nome_torneio,qt_etapas,descricao, fk_id_usuario],
     (err, result) => {
       if (err) {
         res.send(err);
@@ -112,15 +113,32 @@ app.post("/cadastrotorneio",(req,res) => {
   );
 });
 
+app.get("/torneio/:id_torneio",(req,res) => {
+  const fk_id_torneio = req.params.id_torneio;
+
+  db.query("SELECT DISTINCT c.username, ct.comentario FROM cadastro c, comentarios_torneio ct, torneio t " + 
+  " WHERE t.id_torneio = ? AND ct.fk_id_torneio = ? AND c.id_usuario = ct.fk_id_usuario",
+  [fk_id_torneio, fk_id_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({result});
+    }
+  );
+});
 
 app.post("/cadastropartida",(req,res) => {
-  const times = req.body.times;
+  const time1 = req.body.time1;
+  const time2 = req.body.time2;
   const hora = req.body.hora;
   const dia = req.body.dia;
+  const etapa = req.body.etapa;
   const fk_id_torneio = req.body.fk_id_torneio;
 
-  db.query("INSERT INTO partida(times, hora, dia,fk_id_torneio) VALUES (?,?,?,?)",
-    [times, hora, dia,fk_id_torneio],
+  db.query("INSERT INTO partida(time1, time2, hora, dia, etapa, fk_id_torneio) VALUES (?,?,?,?,?,?)",
+    [time1, time2, hora, dia, etapa, fk_id_torneio],
     (error, result) => {
       if (err) {
         res.send(err);
@@ -132,32 +150,13 @@ app.post("/cadastropartida",(req,res) => {
 
 });
 
-app.post("/torneio",(req,res) => {
-  const comentario = req.body.comentario;
-  const fk_id_usuario = req.body.id_usuario
-  const fk_id_torneio = req.body.fk_id_torneio
+app.get("/partida/:id_partida",(req,res) => {
+  const fk_id_partida = req.params.id_partida;
+  const fk_id_torneio = req.body.fk_id_torneio;
 
-  db.query("INSERT INTO comentarios_torneio (comentario, fk_id_usuario, fk_id_torneio) VALUES (?,?,?)",
-  [comentario, fk_id_usuario,fk_id_torneio],
-    (err, result) => {
-      if (err) {
-        res.send(err);
-      }
-
-      res.send({ msg: "Comentário feito com sucesso!", result });
-    }
-  );
-  
-});
-
-
-
-app.get("/torneio/:id_torneio",(req,res) => {
-  const fk_id_torneio = req.params.id_torneio
-
-  db.query("SELECT DISTINCT c.username, ct.comentario FROM cadastro c, comentarios_torneio ct, torneio t " + 
-  " WHERE t.id_torneio = ? AND ct.fk_id_torneio = ? AND c.id_usuario = ct.fk_id_usuario;",
-  [fk_id_torneio, fk_id_torneio],
+  db.query("SELECT DISTINCT c.username, cp.comentario FROM cadastro c, comentarios_partida cp, torneio t, partida p " +
+  " WHERE t.id_torneio = ? AND cp.fk_id_torneio = ? AND cp.fk_id_partida = ? AND c.id_usuario = cp.fk_id_usuario",
+  [fk_id_torneio, fk_id_torneio, fk_id_partida],
     (err, result) => {
       if (err) {
         res.send(err);
@@ -167,6 +166,9 @@ app.get("/torneio/:id_torneio",(req,res) => {
     }
   );
 });
+
+
+
 
 
 
