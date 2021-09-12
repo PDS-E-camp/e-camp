@@ -121,7 +121,7 @@ app.get("/perfil/:id_usuario", (req,res) => {
   
   db.query("SELECT c.nome, c.username, c.data_nasc FROM cadastro c WHERE c.id_usuario = ?; " + 
   "SELECT t.id_torneio, t.link, t.nome_torneio FROM cadastro c, torneio t WHERE t.fk_id_usuario = ? AND t.fk_id_usuario = c.id_usuario;" +
-  "SELECT t.nome_torneio FROM acompanhar_torneio a, cadastro c, torneio t WHERE a.fk_id_usuario = ? AND " + 
+  "SELECT t.nome_torneio, t.link FROM acompanhar_torneio a, cadastro c, torneio t WHERE a.fk_id_usuario = ? AND " + 
            "a.fk_id_usuario = c.id_usuario AND a.fk_id_torneio = t.id_torneio",
    [id_usuario, id_usuario, id_usuario], (err, result) => {
     if (err) {
