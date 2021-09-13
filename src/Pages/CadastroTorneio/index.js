@@ -11,20 +11,22 @@ function Cadastro() {
   const [form, setForm] = useState({
     imagem: '',
     nome: '',
-    numerodetimes: '',
+    etapas: '',
+    descricao: '',
   });
 
   function handleSubmit(event) {
     event.preventDefault();
     const id_usuario = window.localStorage.getItem('id_usuario')
-    if (!form.nome || !form.imagem || !form.numerodetimes){
+    if (!form.nome || !form.imagem || !form.etapas || !form.descricao){
       alert('Há campos não preenchidos, preencha o cadastro corretamente.');
     }else{
     Axios.post("http://localhost:3001/cadastrotorneio", {
-      nome_torneio: form.nome,
-      numero_times: form.numerodetimes,
       link: form.imagem,
-      id_usuario: id_usuario,  
+      nome_torneio: form.nome,
+      qt_etapas: form.etapas,
+      descricao: form.descricao,
+      fk_id_usuario: id_usuario,
     }).then((response) => {
       alert(response.data.msg);
       window.location.href = '/perfil'
@@ -61,10 +63,17 @@ function Cadastro() {
             />
             <input
               type='number'
-              id='numerodetimes'
-              value={form.numerodetimes}
+              id='etapas'
+              value={form.etapas}
               onChange={handleChange}
-              placeholder='Número de times'
+              placeholder='Número de etapas'
+            />
+            <input
+              type='text'
+              id='descricao'
+              value={form.descricao}
+              onChange={handleChange}
+              placeholder='Descrição'
             />          
             {/* <button onClick={handleSubmit}>
               <GrNext />
