@@ -16,11 +16,7 @@ const db = mysql.createPool({
 app.use(express.json());
 app.use(cors());
 
-app.post("/", (req,res) => {
-  const id_torneio = req.body.id_torneio;
-  const nome_torneio = req.body.nome_torneio;
-  const dia = req.body.dia;
-
+app.get("/", (req,res) => {
   db.query("SELECT * FROM torneio t WHERE t.encerrado IS NULL",(err, result) => {
       if (err) {
         res.send(err);
@@ -29,29 +25,42 @@ app.post("/", (req,res) => {
     }
   );
 
-  db.query("SELECT * FROM torneio t WHERE t.id_torneio = ? OR t.nome_torneio = ?",
-  [id_torneio, nome_torneio],
-    (err, result2) => {
-      if (err) {
-        res.send(err);
-      }
+});
 
-      res.send({result2});
-    }
-  );
 
+app.get("/", (req,res) => {
+  const dia = req.body.dia;
+  
   db.query("SELECT * FROM partida p WHERE p.dia = ? AND p.encerrada IS NULL ",
   [dia],
-    (err, result3) => {
+    (err, result) => {
       if (err) {
         res.send(err);
       }
 
-      res.send({result3});
+      res.send({result});
     }
   );
 
 });
+
+app.post("/", (req,res) => {
+  const id_torneio = req.body.id_torneio;
+  const nome_torneio = req.body.nome_torneio;
+
+  db.query("SELECT * FROM torneio t WHERE t.id_torneio = ? OR t.nome_torneio = ?",
+  [id_torneio, nome_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({result});
+    }
+  );
+
+});
+
 
 app.post("/cadastro", (req, res) => {
   const nome = req.body.nome;
@@ -138,7 +147,7 @@ app.post("/cadastrotorneio",(req,res) => {
   const nome_torneio = req.body.nome_torneio;
   const qt_etapas = req.body.qt_etapas;
   const descricao = req.body.descricao;
-  const fk_id_usuario = req.body.id_usuario;
+  const fk_id_usuario = req.body.fk_id_usuario;
 
   db.query("INSERT INTO torneio(link, nome_torneio,qt_etapas, descricao, fk_id_usuario) VALUES (?,?,?,?,?)",
     [link, nome_torneio,qt_etapas,descricao, fk_id_usuario],
@@ -150,51 +159,6 @@ app.post("/cadastrotorneio",(req,res) => {
       res.send({ msg: "Torneio cadastrado com sucesso!", result });
     }
   );
-});
-
-app.post("/torneio",(req,res) => {
-  const comentario = req.body.comentario;
-  const fk_id_usuario = req.body.fk_id_usuario;
-  const fk_id_torneio = req.body.fk_id_torneio;
-  const resultado = req.body.resultado;
-  const encerrado = req.body.encerrado;
-
-  db.query("INSERT INTO comentarios_torneio (comentario, fk_id_usuario, fk_id_torneio) VALUES (?,?,?)",
-  [comentario, fk_id_usuario,fk_id_torneio],
-    (err, result) => {
-      if (err) {
-        res.send(err);
-      }
-
-      res.send({ msg: "Comentário feito com sucesso!", result });
-    }
-  );
-  
-   db.query("INSERT acompanhar_torneio(fk_id_usuario, fk_id_torneio) VALUES (?,?)",
-  [fk_id_usuario,fk_id_torneio],
-    (err, result) => {
-      if (err) {
-        res.send(err);
-      }
-
-      res.send({ msg: "Agora você está acompanhando este torneio!", result });
-    }
-  );
-  
-  
-  db.query("UPDATE torneio SET resultado = ?, encerrado = ? WHERE id_torneio = ?",
-  [resultado, encerrado, fk_id_torneio],
-    (err, result) => {
-      if (err) {
-        res.send(err);
-      }
-
-      res.send({ msg: "Torneio Encerrado!", result });
-    }
-  );
-  
-  
-  
 });
 
 app.get("/torneio/:id_torneio",(req,res) => {
@@ -211,6 +175,61 @@ app.get("/torneio/:id_torneio",(req,res) => {
       res.send({result});
     }
   );
+});
+
+app.post("/torneio",(req,res) => {
+  const comentario = req.body.comentario;
+  const fk_id_usuario = req.body.fk_id_usuario;
+  const fk_id_torneio = req.body.fk_id_torneio;
+
+  db.query("INSERT INTO comentarios_torneio (comentario, fk_id_usuario, fk_id_torneio) VALUES (?,?,?)",
+  [comentario, fk_id_usuario,fk_id_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({ msg: "Comentário feito com sucesso!", result });
+    }
+  );
+  
+});
+
+app.post("/torneio",(req,res) => {
+  const fk_id_usuario = req.body.fk_id_usuario;
+  const fk_id_torneio = req.body.fk_id_torneio;
+  
+   db.query("INSERT INTO acompanhar_torneio(fk_id_usuario, fk_id_torneio) VALUES (?,?)",
+  [fk_id_usuario,fk_id_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({ msg: "Agora você está acompanhando este torneio!", result });
+    }
+  );
+  
+});
+
+
+app.put("/torneio/:id_torneio",(req,res) => {
+  const fk_id_usuario = req.body.fk_id_usuario;
+  const fk_id_torneio = req.body.fk_id_torneio;
+  const resultado = req.body.resultado;
+  const encerrado = req.body.encerrado;
+  
+  db.query("UPDATE torneio SET resultado = ?, encerrado = ? WHERE id_torneio = ?",
+  [resultado, encerrado, fk_id_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({ msg: "Torneio Encerrado!", result });
+    }
+  );
+   
 });
 
 app.post("/cadastropartida",(req,res) => {
@@ -234,43 +253,6 @@ app.post("/cadastropartida",(req,res) => {
 
 });
 
-
-app.post("/partida",(req,res) => {
-  const comentario = req.body.comentario;
-  const fk_id_usuario = req.body.id_usuario
-  const fk_id_torneio = req.body.fk_id_torneio
-  const fk_id_partida = req.body.fk_id_partida
-  const resultado = req.body.resultado;
-  const encerrada = req.body.encerrada;
-
-  db.query("INSERT INTO comentarios_partida(comentario, fk_id_usuario, fk_id_partida, fk_id_torneio) VALUES (?,?,?,?);",
-  [comentario, fk_id_usuario,fk_id_partida,fk_id_torneio],
-    (err, result) => {
-      if (err) {
-        res.send(err);
-      }
-
-      res.send({ msg: "Comentário feito com sucesso!", result });
-    }
-  );
-  
-   db.query("UPDATE partida SET resultado = ?, encerrada = ? WHERE id_partida = ? AND fk_id_torneio = ?",
-  [resultado, encerrada, fk_id_partida, fk_id_torneio],
-    (err, result) => {
-      if (err) {
-        res.send(err);
-      }
-
-      res.send({ msg: "Torneio Partida!", result });
-    }
-  );
-  
-  
-  
-  
-});
-
-
 app.get("/partida/:id_partida",(req,res) => {
   const fk_id_partida = req.params.id_partida;
   const fk_id_torneio = req.body.fk_id_torneio;
@@ -288,7 +270,42 @@ app.get("/partida/:id_partida",(req,res) => {
   );
 });
 
+app.post("/partida",(req,res) => {
+  const comentario = req.body.comentario;
+  const fk_id_usuario = req.body.id_usuario
+  const fk_id_torneio = req.body.fk_id_torneio
+  const fk_id_partida = req.body.fk_id_partida
+ 
+  db.query("INSERT INTO comentarios_partida(comentario, fk_id_usuario, fk_id_partida, fk_id_torneio) VALUES (?,?,?,?);",
+  [comentario, fk_id_usuario,fk_id_partida,fk_id_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
 
+      res.send({ msg: "Comentário feito com sucesso!", result });
+    }
+  );
+});
+
+app.put("/partida/:id_partida",(req,res) => {
+  const fk_id_usuario = req.body.id_usuario
+  const fk_id_torneio = req.body.fk_id_torneio
+  const fk_id_partida = req.body.fk_id_partida
+  const resultado = req.body.resultado;
+  const encerrada = req.body.encerrada;
+  
+   db.query("UPDATE partida SET resultado = ?, encerrada = ? WHERE id_partida = ? AND fk_id_torneio = ?",
+  [resultado, encerrada, fk_id_partida, fk_id_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({ msg: "Partida Encerrada!", result });
+    }
+  );
+});
 
 
 
