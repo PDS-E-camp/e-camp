@@ -37,12 +37,19 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    const dia = new Date().getDate();
+    let dia = new Date().getDate();
+    let mes = new Date().getMonth()+1;
+    let ano = new Date().getFullYear();
+    if (dia<10){
+      dia = `0${dia}`
+    }
+    if (mes<10){
+      mes = `0${mes}`
+    }
     function init() {
-      Axios.get(`http://localhost:3001/partidas/${dia}`)
+      Axios.get(`http://localhost:3001/partidas/${ano}-${mes}-${dia}`)
         .then((response) => {
           setPartidas(response.data.result);
-          // console.log(response.data.result);
         })
         .catch((error) => {
           console.log(error);
@@ -62,10 +69,10 @@ function Home() {
               {partidas.reverse().map((item) => {
                 return (
                   <>
-                    <Thumb key={item.id_torneio} item={item.link}>
+                    <Thumb key={item.id_partida} item={item.link}>
                       <a>
                         <div className="thumb-content">
-                          <h2>{item.nome_torneio}</h2>
+                          <h2>{item.time1} x {item.time2}</h2>
                         </div>
                       </a>
                     </Thumb>

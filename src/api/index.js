@@ -29,7 +29,6 @@ app.get("/", (req,res) => {
 
 app.get("/partidas/:dia", (req,res) => {
   const dia = req.params.dia;
-  console.log(dia)
   db.query("SELECT * FROM partida p WHERE p.dia = ? AND p.encerrada IS NULL ",
   [dia],
     (err, result) => {

@@ -39,6 +39,7 @@ function Cadastro() {
         etapa: form.etapa,
         fk_id_torneio: fk_id_torneio,
       }).then((response) => {
+        
         alert(response.data.msg);
         window.location.href = "/torneio";
       });
