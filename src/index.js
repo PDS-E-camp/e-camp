@@ -8,6 +8,7 @@ import Cadastro from './Pages/Cadastro';
 import Login from './Pages/Login';
 import Admin from './Pages/Admin';
 import CadastroTorneio from './Pages/CadastroTorneio';
+import CadastroPartida from './Pages/CadastroPartida';
 import CadastroJogadores from './Pages/CadastroJogadores';
 import Perfil from './Pages/Perfil';
 
@@ -20,6 +21,7 @@ ReactDOM.render(
       <Route component={Login} path='/login' />
       <Route component={Admin} path='/admin' />
       <Route component={CadastroTorneio} path='/cadastrotorneio' />
+      <Route component={CadastroPartida} path='/cadastropartida' />
       <Route component={CadastroJogadores} path='/cadastrojogadores' />
       <Route component={Perfil} path='/perfil' />
     </BrowserRouter>

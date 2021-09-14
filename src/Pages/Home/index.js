@@ -16,6 +16,7 @@ import Axios from "axios";
 
 function Home() {
   const [torneios, setTorneios] = useState([]);
+  const [partidas, setPartidas] = useState([]);
 
   function handleClick(id) {
     localStorage.setItem("torneioID", id);
@@ -27,7 +28,21 @@ function Home() {
       Axios.get(`http://localhost:3001/`)
         .then((response) => {
           setTorneios(response.data.result);
-          console.log(response.data.result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    init();
+  }, []);
+
+  useEffect(() => {
+    const dia = new Date().getDate();
+    function init() {
+      Axios.get(`http://localhost:3001/partidas/${dia}`)
+        .then((response) => {
+          setPartidas(response.data.result);
+          // console.log(response.data.result);
         })
         .catch((error) => {
           console.log(error);
@@ -40,7 +55,27 @@ function Home() {
     <ContainerHome>
       <Navbar />
       <section className="content-home">
-        <Title title="Acontecendo agora" />
+        {partidas.length > 0 && (
+          <>
+            <Title title="Partidas Hoje" />
+            <div className="slide">
+              {partidas.reverse().map((item) => {
+                return (
+                  <>
+                    <Thumb key={item.id_torneio} item={item.link}>
+                      <a>
+                        <div className="thumb-content">
+                          <h2>{item.nome_torneio}</h2>
+                        </div>
+                      </a>
+                    </Thumb>
+                  </>
+                );
+              })}
+            </div>
+          </>
+        )}
+        <Title title="Torneios" />
         <div className="slide">
           {torneios.reverse().map((item) => {
             return (
@@ -53,31 +88,6 @@ function Home() {
                   </a>
                 </Thumb>
               </>
-            );
-          })}
-        </div>
-        <Title title="Torneios" />
-        <div className="slide">
-          {torneios.map((item) => {
-            return (
-              <Thumb key={item.id} item={item.thumb}>
-                <a onClick={() => handleClick(item.id)}>
-                  <div className="thumb-content">
-                    <h2>{item.nome}</h2>
-                    <h1>{item.premio}</h1>
-                    {/* <div>
-                      <p>
-                        Início: {item.dataI.getDate()}/{item.dataI.getMonth()}/
-                        {item.dataI.getFullYear()}
-                      </p>
-                      <p>
-                        Início: {item.dataF.getDate()}/{item.dataF.getMonth()}/
-                        {item.dataF.getFullYear()}
-                      </p>
-                    </div> */}
-                  </div>
-                </a>
-              </Thumb>
             );
           })}
         </div>

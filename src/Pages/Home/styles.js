@@ -10,6 +10,7 @@ export const ContainerHome = styled.div`
     flex-direction: column;
     align-items: center;
     padding-bottom: 120px !important;
+    min-height: calc(100vh - 210px);
     .slide {
       margin-top: 60px !important;
       display: flex;

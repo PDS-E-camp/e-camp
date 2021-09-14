@@ -27,10 +27,9 @@ app.get("/", (req,res) => {
 
 });
 
-
-app.get("/", (req,res) => {
-  const dia = req.body.dia;
-  
+app.get("/partidas/:dia", (req,res) => {
+  const dia = req.params.dia;
+  console.log(dia)
   db.query("SELECT * FROM partida p WHERE p.dia = ? AND p.encerrada IS NULL ",
   [dia],
     (err, result) => {
@@ -233,6 +232,7 @@ app.put("/torneio/:id_torneio",(req,res) => {
 });
 
 app.post("/cadastropartida",(req,res) => {
+  const link = req.body.link;
   const time1 = req.body.time1;
   const time2 = req.body.time2;
   const hora = req.body.hora;
@@ -240,9 +240,9 @@ app.post("/cadastropartida",(req,res) => {
   const etapa = req.body.etapa;
   const fk_id_torneio = req.body.fk_id_torneio;
 
-  db.query("INSERT INTO partida(time1, time2, hora, dia, etapa, fk_id_torneio) VALUES (?,?,?,?,?,?)",
-    [time1, time2, hora, dia, etapa, fk_id_torneio],
-    (error, result) => {
+  db.query("INSERT INTO partida(time1, time2, hora, dia, etapa, fk_id_torneio, link) VALUES (?,?,?,?,?,?,?)",
+    [time1, time2, hora, dia, etapa, fk_id_torneio, link],
+    (err, result) => {
       if (err) {
         res.send(err);
       }
@@ -260,12 +260,12 @@ app.get("/partida/:id_partida",(req,res) => {
   db.query("SELECT c.username, cp.comentario FROM cadastro c, comentarios_partida cp, torneio t, partida p WHERE cp.fk_id_torneio = ? " +
   " AND cp.fk_id_partida = ? AND c.id_usuario = cp.fk_id_usuario AND cp.fk_id_torneio = t.id_torneio AND cp.fk_id_partida = p.id_partida",
   [fk_id_torneio, fk_id_partida],
-    (err, result) => {
+    (err, result2) => {
       if (err) {
         res.send(err);
       }
 
-      res.send({result});
+      res.send({result2});
     }
   );
 });
@@ -307,7 +307,39 @@ app.put("/partida/:id_partida",(req,res) => {
   );
 });
 
+// #Exibe as partidas de um torneio
 
+app.get("/torneiopartidas/:id_torneio",(req,res) => {
+  const fk_id_torneio = req.params.id_torneio;
+
+  db.query("SELECT * FROM partida p WHERE p.fk_id_torneio = ?",
+  [fk_id_torneio],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({result});
+    }
+  );
+});
+
+// #Exibe os torneios que um usuário acompanha e os que ele criou
+
+app.get("/torneio",(req,res) => {
+  const fk_id_usuario = req.body.id_usuario;
+
+  db.query("SELECT t.id_torneio, t.nome_torneio FROM acompanhar_torneio a, cadastro c, torneio t WHERE a.fk_id_usuario = ? AND a.fk_id_usuario = c.id_usuario AND a.fk_id_torneio = t.id_torneio; SELECT * FROM torneio t WHERE t.fk_id_usuario = ?",
+  [fk_id_usuario, fk_id_usuario],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+
+      res.send({result});
+    }
+  );
+});
 
 
 
