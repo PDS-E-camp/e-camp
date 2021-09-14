@@ -27,6 +27,17 @@ app.get("/", (req,res) => {
 
 });
 
+app.get("/allpartidas", (req,res) => {
+  db.query("SELECT * FROM partida",(err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      res.send({result});
+    }
+  );
+
+});
+
 app.get("/partidas/:dia", (req,res) => {
   const dia = req.params.dia;
   db.query("SELECT * FROM partida p WHERE p.dia = ? AND p.encerrada IS NULL ",

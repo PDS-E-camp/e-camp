@@ -23,9 +23,6 @@ function Navbar() {
           {id_usuario && <button onClick={() => (window.location.href = '/perfil')}>
             <a>PERFIL</a>
           </button>}
-          {id_usuario && <button onClick={() => (window.location.href = '/admin')}>
-            <a>ADMIN</a>
-          </button>}
           {!id_usuario && <button onClick={() => (window.location.href = '/login')}>
             <a>LOGIN</a>
           </button>}

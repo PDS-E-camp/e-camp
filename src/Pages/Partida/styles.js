@@ -53,6 +53,9 @@ export const ContainerJogo = styled.div`
       justify-content: space-between;
       align-items: flex-start;
       width: 100%;
+      > div > p {
+        margin: 15px 0;
+      }
       .partida {
         width: 150px;
         height: 40px;

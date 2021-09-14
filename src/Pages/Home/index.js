@@ -19,8 +19,12 @@ function Home() {
   const [partidas, setPartidas] = useState([]);
 
   function handleClick(id) {
-    localStorage.setItem("torneioID", id);
-    // window.location.href = '/torneio';
+    localStorage.setItem("id_torneio", id);
+    window.location.href = "/torneio";
+  }
+  function handleClickPartida(id) {
+    localStorage.setItem("id_partida", id);
+    window.location.href = "/partida";
   }
 
   useEffect(() => {
@@ -38,13 +42,13 @@ function Home() {
 
   useEffect(() => {
     let dia = new Date().getDate();
-    let mes = new Date().getMonth()+1;
+    let mes = new Date().getMonth() + 1;
     let ano = new Date().getFullYear();
-    if (dia<10){
-      dia = `0${dia}`
+    if (dia < 10) {
+      dia = `0${dia}`;
     }
-    if (mes<10){
-      mes = `0${mes}`
+    if (mes < 10) {
+      mes = `0${mes}`;
     }
     function init() {
       Axios.get(`http://localhost:3001/partidas/${ano}-${mes}-${dia}`)
@@ -69,10 +73,16 @@ function Home() {
               {partidas.reverse().map((item) => {
                 return (
                   <>
-                    <Thumb key={item.id_partida} item={item.link}>
+                    <Thumb
+                      key={item.id_partida}
+                      item={item.link}
+                      onClick={() => handleClickPartida(item.id_partida)}
+                    >
                       <a>
                         <div className="thumb-content">
-                          <h2>{item.time1} x {item.time2}</h2>
+                          <h2>
+                            {item.time1} x {item.time2}
+                          </h2>
                         </div>
                       </a>
                     </Thumb>
@@ -87,7 +97,11 @@ function Home() {
           {torneios.reverse().map((item) => {
             return (
               <>
-                <Thumb key={item.id_torneio} item={item.link}>
+                <Thumb
+                  key={item.id_torneio}
+                  item={item.link}
+                  onClick={() => handleClick(item.id_torneio)}
+                >
                   <a>
                     <div className="thumb-content">
                       <h2>{item.nome_torneio}</h2>
