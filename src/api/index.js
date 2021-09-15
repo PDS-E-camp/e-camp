@@ -122,10 +122,8 @@ app.post("/login", (req, res) => {
         if (response) {
         
           res.send({ msg: "Usuário logado!", result });
-          console.log(response);
         } else {
           res.send({ msg: "Senha incorreta!" });
-          console.log(response);
         }
       });
     } else {
@@ -263,19 +261,17 @@ app.post("/cadastropartida",(req,res) => {
 
 });
 
-app.get("/partida/:id_partida",(req,res) => {
-  const fk_id_partida = req.params.id_partida;
+app.post("/partidacomentarios",(req,res) => {
+  const fk_id_partida = req.body.id_partida;
   const fk_id_torneio = req.body.fk_id_torneio;
-
-  db.query("SELECT c.username, cp.comentario FROM cadastro c, comentarios_partida cp, torneio t, partida p WHERE cp.fk_id_torneio = ? " +
-  " AND cp.fk_id_partida = ? AND c.id_usuario = cp.fk_id_usuario AND cp.fk_id_torneio = t.id_torneio AND cp.fk_id_partida = p.id_partida",
+  db.query("select c.username, cp.comentario FROM cadastro c, comentarios_partida cp, torneio t, partida p WHERE cp.fk_id_torneio = ? AND cp.fk_id_partida = ? AND c.id_usuario = cp.fk_id_usuario AND cp.fk_id_torneio = t.id_torneio AND cp.fk_id_partida = p.id_partida",
   [fk_id_torneio, fk_id_partida],
-    (err, result2) => {
+    (err, result) => {
       if (err) {
         res.send(err);
       }
-
-      res.send({result2});
+      console.log(result)
+      res.send({result});
     }
   );
 });

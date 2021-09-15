@@ -18,18 +18,21 @@ function Partida() {
   const [partidaAtual, setPartidaAtual] = useState({});
 
   function getComentarios() {
-    // const id_torneio = window.localStorage.getItem("id_torneio");
-    // Axios.get(`http://localhost:3001/torneio/${id_torneio}`).then(
-    //   (response) => {
-    //     setComentarios(response.data.result);
-    //   }
-    // );
+    const id_partida = window.localStorage.getItem("id_partida");
+    const fk_id_torneio = window.localStorage.getItem("id_partida_torneio");
+    console.log(id_partida);
+    console.log(fk_id_torneio);
+    Axios.post(`http://localhost:3001/partidacomentarios`, {
+      id_partida: id_partida,
+      fk_id_torneio,
+    }).then((response) => {
+      setComentarios(response.data.result);
+    });
   }
 
   useEffect(() => {
     const fk_id_torneio = window.localStorage.getItem("id_partida_torneio");
     const id_partida = window.localStorage.getItem("id_partida");
-    console.log(fk_id_torneio, id_partida);
     function init() {
       Axios.get(`http://localhost:3001/allpartidas`)
         .then((response) => {
@@ -51,20 +54,22 @@ function Partida() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    // const id_usuario = window.localStorage.getItem("id_usuario");
-    // const id_torneio = window.localStorage.getItem("id_torneio");
-    // if (!textArea) {
-    //   alert("Preencha o comentário corretamente.");
-    // } else {
-    //   Axios.post("http://localhost:3001/torneio", {
-    //     comentario: textArea,
-    //     fk_id_usuario: id_usuario,
-    //     fk_id_torneio: id_torneio,
-    //   }).then((response) => {
-    //     getComentarios();
-    //     setTextArea("");
-    //   });
-    // }
+    const id_usuario = window.localStorage.getItem("id_usuario");
+    const id_torneio = window.localStorage.getItem("id_partida_torneio");
+    const id_partida = window.localStorage.getItem("id_partida");
+    if (!textArea) {
+      alert("Preencha o comentário corretamente.");
+    } else {
+      Axios.post("http://localhost:3001/partida", {
+        comentario: textArea,
+        id_usuario: id_usuario,
+        fk_id_torneio: id_torneio,
+        fk_id_partida: id_partida,
+      }).then((response) => {
+        getComentarios();
+        setTextArea("");
+      });
+    }
   }
 
   return (
@@ -112,10 +117,10 @@ function Partida() {
             {comentarios
               .map((item) => {
                 return (
-                  <>
+                  <div key={item.comentario}>
                     <p className="nome">{item.username}</p>
                     <p className="texto">{item.comentario}</p>
-                  </>
+                  </div>
                 );
               })
               .reverse()}

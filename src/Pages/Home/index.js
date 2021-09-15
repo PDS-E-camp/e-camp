@@ -22,8 +22,9 @@ function Home() {
     localStorage.setItem("id_torneio", id);
     window.location.href = "/torneio";
   }
-  function handleClickPartida(id) {
-    localStorage.setItem("id_partida", id);
+  function handleClickPartida(idPartida, idTorneio) {
+    localStorage.setItem("id_partida", idPartida);
+    localStorage.setItem("id_partida_torneio", idTorneio);
     window.location.href = "/partida";
   }
 
@@ -53,6 +54,7 @@ function Home() {
     function init() {
       Axios.get(`http://localhost:3001/partidas/${ano}-${mes}-${dia}`)
         .then((response) => {
+          console.log(response)
           setPartidas(response.data.result);
         })
         .catch((error) => {
@@ -76,7 +78,7 @@ function Home() {
                     <Thumb
                       key={item.id_partida}
                       item={item.link}
-                      onClick={() => handleClickPartida(item.id_partida)}
+                      onClick={() => handleClickPartida(item.id_partida, item.fk_id_torneio)}
                     >
                       <a>
                         <div className="thumb-content">
