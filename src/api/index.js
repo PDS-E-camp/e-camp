@@ -27,6 +27,17 @@ app.get("/", (req,res) => {
 
 });
 
+app.get("/alltorneios", (req,res) => {
+  db.query("SELECT * FROM torneio t",(err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      res.send({result});
+    }
+  );
+
+});
+
 app.get("/allpartidas", (req,res) => {
   db.query("SELECT * FROM partida",(err, result) => {
       if (err) {
@@ -220,8 +231,7 @@ app.post("/acompanhartorneio",(req,res) => {
 });
 
 
-app.put("/torneio/:id_torneio",(req,res) => {
-  const fk_id_usuario = req.body.fk_id_usuario;
+app.put("/torneio",(req,res) => {
   const fk_id_torneio = req.body.fk_id_torneio;
   const resultado = req.body.resultado;
   const encerrado = req.body.encerrado;

@@ -4,6 +4,7 @@ import Provider from './Theme/Provider';
 import { Route, BrowserRouter } from 'react-router-dom';
 import Home from './Pages/Home';
 import Torneio from './Pages/Torneio';
+import EncerrarTorneio from './Pages/EncerrarTorneio';
 import Partida from './Pages/Partida';
 import Cadastro from './Pages/Cadastro';
 import Login from './Pages/Login';
@@ -17,6 +18,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Route component={Home} path='/' exact />
       <Route component={Torneio} path='/torneio' />
+      <Route component={EncerrarTorneio} path='/encerrartorneio' />
       <Route component={Partida} path='/partida' />
       <Route component={Cadastro} path='/cadastro' />
       <Route component={Login} path='/login' />

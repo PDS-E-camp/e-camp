@@ -21,6 +21,30 @@ export const ContainerJogo = styled.div`
     background-size: cover;
     background-position: center;
   }
+  .texto-resultado {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.7);
+  }
+  .rodada {
+    font-weight: bold;
+    font-size: 48px;
+    font-family: "Oswald", sans-serif;
+    color: ${({ theme }) => theme.primary};
+  }
+  .resultado {
+    color: #54c147;
+  }
+  .status {
+    color: #54c147;
+    font-family: "Oswald", sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+  }
   .content {
     width: 1440px;
     padding: 30px 70px !important;
@@ -48,13 +72,19 @@ export const ContainerJogo = styled.div`
       font-weight: bold;
       font-family: "Oswald", sans-serif;
     }
+    .buttons {
+      margin-left: 4rem;
+      display: flex;
+      flex-direction: column;
+    }
     .titulo-button {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       width: 100%;
       .partida,
-      .acompanhar {
+      .acompanhar,
+      .encerrar {
         width: 150px;
         height: 40px;
         background: ${({ theme }) => theme.primary};
@@ -68,7 +98,8 @@ export const ContainerJogo = styled.div`
         text-align: center;
         font-family: "Oswald", sans-serif;
         transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        margin-left: 4rem;
+
+        margin-bottom: 1rem;
         :hover {
           transform: scale(1.1);
         }
@@ -76,7 +107,11 @@ export const ContainerJogo = styled.div`
       .acompanhar {
         height: auto;
         /* padding: 1rem; */
-        margin-top: 1rem;
+      }
+      .encerrar {
+        border: 2px solid ${({ theme }) => theme.primary};
+        background: ${({ theme }) => theme.white};
+        color: ${({ theme }) => theme.primary};
       }
     }
 
@@ -131,12 +166,7 @@ export const ContainerJogo = styled.div`
       }
     }
   }
-  .rodada {
-    font-weight: bold;
-    font-size: 48px;
-    font-family: "Oswald", sans-serif;
-    color: ${({ theme }) => theme.primary};
-  }
+
   .slide {
     margin-top: 60px !important;
     display: flex;

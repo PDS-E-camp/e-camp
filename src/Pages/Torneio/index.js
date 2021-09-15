@@ -42,8 +42,9 @@ function Torneio() {
     const id_usuario = window.localStorage.getItem("id_usuario");
     console.log(typeof id_usuario);
     function init() {
-      Axios.get(`http://localhost:3001/`)
+      Axios.get(`http://localhost:3001/alltorneios`)
         .then((response) => {
+          console.log(response);
           response.data.result.map((item) => {
             if (item.fk_id_usuario.toString() === id_usuario) {
               setAdmin(true);
@@ -97,46 +98,72 @@ function Torneio() {
     <ContainerJogo capa={torneioAtual.link}>
       <Navbar />
       <section className="content-jogo">
-        <div className="capa" />
+        <div className="capa">
+          {" "}
+          {torneioAtual.encerrado === "sim" && (
+            <div className='texto-resultado'>
+              <p className="status">ENCERRADO</p>
+              <p className="rodada resultado">
+                Resultado: {torneioAtual.resultado}
+              </p>
+            </div>
+          )}
+        </div>
         <div className="content">
           <div className="titulo-button">
             <div>
               <p className="rodada">{torneioAtual.nome_torneio}</p>
               <p className="descricao">{torneioAtual.descricao}</p>
             </div>
-            <div className='buttons'>
-              {admin && (
-                <button
-                  className="partida"
-                  onClick={() => (window.location.href = "/cadastropartida")}
-                >
-                  Criar Partida
+            {torneioAtual.encerrado !== "sim" && (
+              <div className="buttons">
+                <button className="acompanhar" onClick={acompanharTorneio}>
+                  Acompanhar Torneio
                 </button>
-              )}
-              <button className="acompanhar" onClick={acompanharTorneio}>
-                Acompanhar Torneio
-              </button>
-            </div>
-          </div>
-          <div className="slide">
-            {partidas
-              .map((item) => {
-                return (
+                {admin && (
                   <>
-                    <Thumb key={item.id_partida} item={item.link}>
-                      <a>
-                        <div className="thumb-content">
-                          <h2>
-                            {item.time1} x {item.time2}
-                          </h2>
-                        </div>
-                      </a>
-                    </Thumb>
+                    <button
+                      className="partida"
+                      onClick={() =>
+                        (window.location.href = "/cadastropartida")
+                      }
+                    >
+                      Criar Partida
+                    </button>
+                    <button
+                      className="encerrar"
+                      onClick={() =>
+                        (window.location.href = "/encerrartorneio")
+                      }
+                    >
+                      Encerrar Torneio
+                    </button>
                   </>
-                );
-              })
-              .reverse()}
+                )}
+              </div>
+            )}
           </div>
+          {torneioAtual.encerrado !== "sim" && (
+            <div className="slide">
+              {partidas
+                .map((item) => {
+                  return (
+                    <>
+                      <Thumb key={item.id_partida} item={item.link}>
+                        <a>
+                          <div className="thumb-content">
+                            <h2>
+                              {item.time1} x {item.time2}
+                            </h2>
+                          </div>
+                        </a>
+                      </Thumb>
+                    </>
+                  );
+                })
+                .reverse()}
+            </div>
+          )}
           <form onSubmit={handleSubmit}>
             <label>Comentários</label>
             <textarea
