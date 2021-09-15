@@ -53,7 +53,8 @@ export const ContainerJogo = styled.div`
       justify-content: space-between;
       align-items: flex-start;
       width: 100%;
-      .partida {
+      .partida,
+      .acompanhar {
         width: 150px;
         height: 40px;
         background: ${({ theme }) => theme.primary};
@@ -67,9 +68,15 @@ export const ContainerJogo = styled.div`
         text-align: center;
         font-family: "Oswald", sans-serif;
         transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        margin-left: 4rem;
         :hover {
           transform: scale(1.1);
         }
+      }
+      .acompanhar {
+        height: auto;
+        /* padding: 1rem; */
+        margin-top: 1rem;
       }
     }
 

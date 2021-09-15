@@ -40,14 +40,14 @@ function Torneio() {
   useEffect(() => {
     const id_torneio = window.localStorage.getItem("id_torneio");
     const id_usuario = window.localStorage.getItem("id_usuario");
-    console.log(typeof id_usuario)
+    console.log(typeof id_usuario);
     function init() {
       Axios.get(`http://localhost:3001/`)
         .then((response) => {
           response.data.result.map((item) => {
-            if(item.fk_id_usuario.toString()===id_usuario){
-              setAdmin(true)
-            };
+            if (item.fk_id_usuario.toString() === id_usuario) {
+              setAdmin(true);
+            }
             if (item.id_torneio.toString() === id_torneio) {
               setTorneioAtual(item);
             }
@@ -80,6 +80,19 @@ function Torneio() {
     }
   }
 
+  //funções para acompanhar abaixo
+
+  function acompanharTorneio(params) {
+    const id_usuario = window.localStorage.getItem("id_usuario");
+    const id_torneio = window.localStorage.getItem("id_torneio");
+    Axios.post("http://localhost:3001/acompanhartorneio", {
+      fk_id_usuario: id_usuario,
+      fk_id_torneio: id_torneio,
+    }).then((response) => {
+      alert(response.data.msg);
+    });
+  }
+
   return (
     <ContainerJogo capa={torneioAtual.link}>
       <Navbar />
@@ -91,31 +104,38 @@ function Torneio() {
               <p className="rodada">{torneioAtual.nome_torneio}</p>
               <p className="descricao">{torneioAtual.descricao}</p>
             </div>
-            {admin && (
-              <button
-                className="partida"
-                onClick={() => (window.location.href = "/cadastropartida")}
-              >
-                Criar Partida
+            <div className='buttons'>
+              {admin && (
+                <button
+                  className="partida"
+                  onClick={() => (window.location.href = "/cadastropartida")}
+                >
+                  Criar Partida
+                </button>
+              )}
+              <button className="acompanhar" onClick={acompanharTorneio}>
+                Acompanhar Torneio
               </button>
-            )}
+            </div>
           </div>
           <div className="slide">
-            {partidas.map((item) => {
-              return (
-                <>
-                  <Thumb key={item.id_partida} item={item.link}>
-                    <a>
-                      <div className="thumb-content">
-                        <h2>
-                          {item.time1} x {item.time2}
-                        </h2>
-                      </div>
-                    </a>
-                  </Thumb>
-                </>
-              );
-            }).reverse()}
+            {partidas
+              .map((item) => {
+                return (
+                  <>
+                    <Thumb key={item.id_partida} item={item.link}>
+                      <a>
+                        <div className="thumb-content">
+                          <h2>
+                            {item.time1} x {item.time2}
+                          </h2>
+                        </div>
+                      </a>
+                    </Thumb>
+                  </>
+                );
+              })
+              .reverse()}
           </div>
           <form onSubmit={handleSubmit}>
             <label>Comentários</label>

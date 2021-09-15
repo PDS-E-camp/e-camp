@@ -202,7 +202,7 @@ app.post("/torneio",(req,res) => {
   
 });
 
-app.post("/torneio",(req,res) => {
+app.post("/acompanhartorneio",(req,res) => {
   const fk_id_usuario = req.body.fk_id_usuario;
   const fk_id_torneio = req.body.fk_id_torneio;
   
@@ -332,10 +332,10 @@ app.get("/torneiopartidas/:id_torneio",(req,res) => {
 
 // #Exibe os torneios que um usuário acompanha e os que ele criou
 
-app.get("/torneio",(req,res) => {
-  const fk_id_usuario = req.body.id_usuario;
+app.get("/catorneio/:id_usuario",(req,res) => {
+  const fk_id_usuario = req.params.id_usuario;
 
-  db.query("SELECT t.id_torneio, t.nome_torneio FROM acompanhar_torneio a, cadastro c, torneio t WHERE a.fk_id_usuario = ? AND a.fk_id_usuario = c.id_usuario AND a.fk_id_torneio = t.id_torneio; SELECT * FROM torneio t WHERE t.fk_id_usuario = ?",
+  db.query("SELECT t.id_torneio, t.nome_torneio, t.link FROM acompanhar_torneio a, cadastro c, torneio t WHERE a.fk_id_usuario = ? AND a.fk_id_usuario = c.id_usuario AND a.fk_id_torneio = t.id_torneio; SELECT * FROM torneio t WHERE t.fk_id_usuario = ?",
   [fk_id_usuario, fk_id_usuario],
     (err, result) => {
       if (err) {
