@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import Provider from "./Theme/Provider";
 import { Route, BrowserRouter } from "react-router-dom";
 import Home from "./Pages/Home";
+import Busca from "./Pages/Busca";
 import Torneio from "./Pages/Torneio";
 import EncerrarTorneio from "./Pages/EncerrarTorneio";
 import EncerrarPartida from "./Pages/EncerrarPartida";
@@ -18,6 +19,7 @@ ReactDOM.render(
   <Provider>
     <BrowserRouter>
       <Route component={Home} path="/" exact />
+      <Route component={Busca} path="/busca" />
       <Route component={Torneio} path="/torneio" />
       <Route component={EncerrarTorneio} path="/encerrartorneio" />
       <Route component={EncerrarPartida} path="/encerrarpartida" />

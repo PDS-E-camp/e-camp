@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ContainerNavbar = styled.div`
   background: ${({ theme }) => theme.black};
@@ -14,7 +14,7 @@ export const ContainerNavbar = styled.div`
       width: 90vw;
     }
     h1 {
-      font-family: 'Press Start 2P', cursive;
+      font-family: "Press Start 2P", cursive;
       font-size: 36px;
       color: ${({ theme }) => theme.primary};
       cursor: pointer;
@@ -36,17 +36,48 @@ export const ContainerNavbar = styled.div`
       align-items: center;
       width: 100%;
       height: 100%;
-      font-family: 'Oswald', sans-serif;
+      font-family: "Oswald", sans-serif;
       color: ${({ theme }) => theme.white};
-      :hover{
+      :hover {
         color: ${({ theme }) => theme.primary};
       }
       cursor: pointer;
     }
     .cadastro {
       background: ${({ theme }) => theme.primary} !important;
-      a:hover{
+      a:hover {
         color: ${({ theme }) => theme.black};
+      }
+    }
+  }
+  form {
+    margin-right: 6rem;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    align-self: center;
+
+    input {
+      height: 30px;
+      font-family: "Oswald", sans-serif;
+      padding: 0 0.5rem;
+      font-size: 1rem;
+    }
+    button {
+      margin-left: 1rem;
+      background: ${({ theme }) => theme.primary} !important;
+      height: 32px !important;
+      box-sizing: border-box;
+      border: none;
+      font-family: "Oswald", sans-serif;
+      font-weight: bold;
+      font-size: 1rem;
+      color: ${({ theme }) => theme.white};
+      :hover {
+        border: 2px solid ${({ theme }) => theme.primary} !important;
+        cursor: pointer;
+        background: ${({ theme }) => theme.white} !important;
+        color: ${({ theme }) => theme.primary};
       }
     }
   }
