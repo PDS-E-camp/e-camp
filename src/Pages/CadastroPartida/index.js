@@ -34,15 +34,18 @@ function Cadastro() {
         link: form.link,
         time1: form.time1,
         time2: form.time2,
-        hora: form.hora,
+        hora: `${form.hora}:00`,
         dia: form.dia,
         etapa: form.etapa,
         fk_id_torneio: fk_id_torneio,
-      }).then((response) => {
-        
-        alert(response.data.msg);
-        window.location.href = "/torneio";
-      });
+      })
+        .then((response) => {
+          alert(response.data.msg);
+          window.location.href = "/torneio";
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 

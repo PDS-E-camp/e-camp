@@ -44,15 +44,23 @@ function Torneio() {
     function init() {
       Axios.get(`http://localhost:3001/alltorneios`)
         .then((response) => {
-          console.log(response);
+          const arrayAdmin = [];
           response.data.result.map((item) => {
-            if (item.fk_id_usuario.toString() === id_usuario) {
-              setAdmin(true);
-            }
+            console.log(item.fk_id_usuario.toString(), id_usuario);
+
             if (item.id_torneio.toString() === id_torneio) {
               setTorneioAtual(item);
+              if (item.fk_id_usuario.toString() === id_usuario) {
+                arrayAdmin.push(item);
+              }
             }
           });
+          console.log(arrayAdmin);
+          if (arrayAdmin.length > 0) {
+           setAdmin(true)
+          } else {
+            setAdmin(false)
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -81,6 +89,12 @@ function Torneio() {
     }
   }
 
+  function handleClickPartida(idPartida, idTorneio) {
+    localStorage.setItem("id_partida", idPartida);
+    localStorage.setItem("id_partida_torneio", idTorneio);
+    window.location.href = "/partida";
+  }
+
   //funções para acompanhar abaixo
 
   function acompanharTorneio(params) {
@@ -101,7 +115,7 @@ function Torneio() {
         <div className="capa">
           {" "}
           {torneioAtual.encerrado === "sim" && (
-            <div className='texto-resultado'>
+            <div className="texto-resultado">
               <p className="status">ENCERRADO</p>
               <p className="rodada resultado">
                 Resultado: {torneioAtual.resultado}
@@ -149,7 +163,16 @@ function Torneio() {
                 .map((item) => {
                   return (
                     <>
-                      <Thumb key={item.id_partida} item={item.link}>
+                      <Thumb
+                        key={item.id_partida}
+                        item={item.link}
+                        onClick={() =>
+                          handleClickPartida(
+                            item.id_partida,
+                            item.fk_id_torneio
+                          )
+                        }
+                      >
                         <a>
                           <div className="thumb-content">
                             <h2>

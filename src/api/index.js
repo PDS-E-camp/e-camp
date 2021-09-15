@@ -304,8 +304,7 @@ app.post("/partida",(req,res) => {
   );
 });
 
-app.put("/partida/:id_partida",(req,res) => {
-  const fk_id_usuario = req.body.id_usuario
+app.put("/encerrarpartida",(req,res) => {
   const fk_id_torneio = req.body.fk_id_torneio
   const fk_id_partida = req.body.fk_id_partida
   const resultado = req.body.resultado;

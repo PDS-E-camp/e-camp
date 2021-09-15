@@ -17,23 +17,20 @@ function Perfil() {
   const [arrayGerencio, setArrayGerencio] = useState([]);
   const [arrayAcompanho, setArrayAcompanho] = useState([]);
 
-  // useEffect(() => {
-  //   const id_usuario = window.localStorage.getItem("id_usuario");
-  //   function init() {
-  //     Axios.get(`http://localhost:3001/perfil/${id_usuario}`).then(
-  //       (response) => {
-  //         window.localStorage.setItem("username", response.data[0][0].username);
-  //         setArrayGerencio(response.data[1]);
-  //         console.log(response.data[1])
-  //         setArrayAcompanho(response.data[1]);
-  //         setPerfil(response.data[0][0]);
-  //         const date = new Date(response.data[0][0].data_nasc);
-  //         setDataNasc(date);
-  //       }
-  //     );
-  //   }
-  //   init();
-  // }, []);
+  useEffect(() => {
+    const id_usuario = window.localStorage.getItem("id_usuario");
+    function init() {
+      Axios.get(`http://localhost:3001/perfil/${id_usuario}`).then(
+        (response) => {
+          window.localStorage.setItem("username", response.data[0][0].username);
+          setPerfil(response.data[0][0]);
+          const date = new Date(response.data[0][0].data_nasc);
+          setDataNasc(date);
+        }
+      );
+    }
+    init();
+  }, []);
 
   useEffect(() => {
     const id_usuario = window.localStorage.getItem("id_usuario");

@@ -8,6 +8,47 @@ export const ContainerJogo = styled.div`
   * {
     box-sizing: border-box;
   }
+  .texto-resultado {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.7);
+  }
+ 
+  .status {
+    color: #54c147;
+    font-family: "Oswald", sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .encerrar {
+    width: 150px;
+    height: 40px;
+    background: ${({ theme }) => theme.primary};
+    cursor: pointer;
+    transform: scale(1.05);
+    color: ${({ theme }) => theme.white};
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    font-family: "Oswald", sans-serif;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    margin-bottom: 1rem;
+    :hover {
+      transform: scale(1.1);
+    }
+  }
+  .encerrar {
+    border: 2px solid ${({ theme }) => theme.primary};
+    background: ${({ theme }) => theme.white};
+    color: ${({ theme }) => theme.primary};
+  }
   .content-jogo {
     display: flex;
     flex-direction: column;
@@ -140,6 +181,15 @@ export const ContainerJogo = styled.div`
     width: 1440px;
     flex-wrap: wrap;
   }
+  .rodada {
+    font-weight: bold;
+    font-size: 48px;
+    font-family: "Oswald", sans-serif;
+    color: ${({ theme }) => theme.primary};
+  }
+  .resultado {
+    color: #54c147;
+  }
 `;
 export const Thumb = styled.div`
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -164,4 +214,5 @@ export const Thumb = styled.div`
       color: white;
     }
   }
+ 
 `;
