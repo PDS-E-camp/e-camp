@@ -25,14 +25,17 @@ Projeto desenvolvido pelos alunos Cayo Roberto, Kaio Yukio, , Rodolfo Rivelino e
 
 ### Diagramas feitos durante o desenvolvimento do projeto
 
+#### Diagrama de caso de uso
 <div align="center">
   <img src="./src/assets/images/D1.png" width="70%" align="center" />
 </div>
 <br />
+#### Diagrama de classe
 <div align="center">
   <img src="./src/assets/images/D2.png" width="70%" align="center" />
 </div>
 <br />
+#### Diagramas de sequência 
 <div align="center">
   <img src="./src/assets/images/D3.png" width="70%" align="center" />
 </div>
@@ -41,6 +44,7 @@ Projeto desenvolvido pelos alunos Cayo Roberto, Kaio Yukio, , Rodolfo Rivelino e
   <img src="./src/assets/images/D4.png" width="70%" align="center" />
 </div>
 <br />
+#### Diagramas de estados
 <div align="center">
   <img src="./src/assets/images/D5.png" width="70%" align="center" />
 </div>
