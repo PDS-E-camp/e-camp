@@ -2,7 +2,7 @@
   <h1 align="center">E-Camp</h1>
 
 ## Sobre o Projeto
-Projeto desenvolvido pelos alunos Cayo Roberto, Kaio Yukio, , Rodolfo Rivelino e Victor Maya para disciplina de Projeto e Desenvolvimento de Software, do curso de Engenharia da Computação, da Universidade Federal do Maranhão, ministrada pelo Prof. Dr.Davi Viana dos Santos.
+Projeto desenvolvido pelos alunos Cayo Roberto, Kaio Yukio, Rodolfo Rivelino e Victor Maya para disciplina de Projeto e Desenvolvimento de Software, do curso de Engenharia da Computação, da Universidade Federal do Maranhão, ministrada pelo Prof. Dr.Davi Viana dos Santos.
 
 <div align="center">
   <img src="./src/assets/images/e-camp.png" width="70%" align="center" />
@@ -11,8 +11,8 @@ Projeto desenvolvido pelos alunos Cayo Roberto, Kaio Yukio, , Rodolfo Rivelino e
 
 ### Proposta: site de genrenciamento de campeonatos
 - Contém o gerenciamento de campeonatos;
-- É possivel acompanhar seus campeonatos preferidos/partidas preferidas;
-- Qualquer um pode criar seu próprio campeonato, não importa a dimensão.
+- É possivel acompanhar seus campeonatos preferidos com suas respectivas partidas;
+- Qualquer um pode criar seu próprio campeonato, não importa a dimensão;
 - Se logado você poderá comentar nos campeonatos e nas partidas.
 
 ### Tecnologias
